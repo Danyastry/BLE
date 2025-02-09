@@ -1,0 +1,35 @@
+package com.dvstry.ble
+
+import android.bluetooth.BluetoothAdapter
+import android.bluetooth.BluetoothManager
+import android.content.Context
+import com.dvstry.ble.data.ReceiveManager
+import com.dvstry.ble.data.ble.BLEReceiveManager
+import dagger.Module
+import dagger.Provides
+import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
+import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
+
+@Module
+@InstallIn(SingletonComponent::class)
+object AppModule {
+
+    @Provides
+    @Singleton
+    fun provideTempHumidityReceiveManager(
+        @ApplicationContext context: Context,
+        bluetoothAdapter: BluetoothAdapter
+    ): ReceiveManager {
+        return BLEReceiveManager(bluetoothAdapter,context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideBluetoothAdapter(@ApplicationContext context: Context):BluetoothAdapter{
+        val manager = context.getSystemService(Context.BLUETOOTH_SERVICE) as BluetoothManager
+        return manager.adapter
+    }
+
+}
