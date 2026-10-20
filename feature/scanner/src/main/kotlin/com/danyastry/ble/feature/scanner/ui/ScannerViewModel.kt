@@ -2,11 +2,9 @@ package com.danyastry.ble.feature.scanner.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.danyastry.ble.feature.scanner.DeviceEntry
 import com.danyastry.ble.feature.scanner.DeviceFilter
 import com.danyastry.ble.feature.scanner.DeviceList
 import com.danyastry.ble.feature.scanner.ScanEvent
-import com.danyastry.ble.feature.scanner.ScanFailure
 import com.danyastry.ble.feature.scanner.ScanMode
 import com.danyastry.ble.feature.scanner.ScanThrottle
 import com.danyastry.ble.feature.scanner.ScannerBackend
@@ -19,20 +17,6 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
-
-data class ScannerUiState(
-    val isScanning: Boolean = false,
-    val mode: ScanMode = ScanMode.BALANCED,
-    val sensorOnly: Boolean = false,
-    val filter: DeviceFilter = DeviceFilter(),
-    val sort: SortOrder = SortOrder.SIGNAL,
-    val devices: List<DeviceEntry> = emptyList(),
-    val totalSeen: Int = 0,
-    val waitSeconds: Int = 0,
-    val failure: ScanFailure? = null,
-    val selected: DeviceEntry? = null,
-    val nowMillis: Long = 0,
-)
 
 class ScannerViewModel(
     private val backend: ScannerBackend,
