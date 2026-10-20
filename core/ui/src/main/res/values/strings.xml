@@ -1,0 +1,10 @@
+<resources>
+    <string name="category_peripheral">Peripheral</string>
+    <string name="category_central">Central</string>
+    <string name="category_under_the_hood">Under the hood</string>
+    <string name="category_peripheral_description">This phone advertises and serves data, the way a sensor does</string>
+    <string name="category_central_description">Find devices nearby and talk to their GATT services</string>
+    <string name="category_under_the_hood_description">Packets, timing and security below the Android API</string>
+    <string name="requirement_android">Android %1$s+</string>
+    <string name="requirement_needs_android">Needs Android %1$s</string>
+</resources>
