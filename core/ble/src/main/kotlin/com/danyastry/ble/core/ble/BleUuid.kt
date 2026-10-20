@@ -15,6 +15,18 @@ object BleUuid {
         return UUID((value.toLong() shl 32) or BASE_HIGH, BASE_LOW)
     }
 
+    fun from32(value: Long): UUID {
+        require(value in 0..0xFFFF_FFFFL) { "32-bit UUIDs go up to 0xFFFFFFFF, got 0x${value.toString(16)}" }
+        return UUID((value shl 32) or BASE_HIGH, BASE_LOW)
+    }
+
+    fun fromLittleEndian(bytes: ByteArray): UUID {
+        require(bytes.size == 16) { "128-bit UUIDs are 16 bytes, got ${bytes.size}" }
+        val bigEndian = bytes.reversedArray()
+        val buffer = java.nio.ByteBuffer.wrap(bigEndian)
+        return UUID(buffer.long, buffer.long)
+    }
+
     fun shortOf(uuid: UUID): Int? {
         val isBase = uuid.leastSignificantBits == BASE_LOW && (uuid.mostSignificantBits and SHORT_MASK.inv()) == BASE_HIGH
         val value = uuid.mostSignificantBits ushr 32
