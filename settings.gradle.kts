@@ -1,4 +1,5 @@
 pluginManagement {
+    includeBuild("build-logic")
     repositories {
         google {
             content {
@@ -19,6 +20,10 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "BLE"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+
+rootProject.name = "ble"
+
 include(":app")
- 
+include(":core:ble")
+include(":core:ui")

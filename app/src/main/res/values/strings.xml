@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">BLE</string>
+    <string name="app_name">BLE Lab</string>
+    <string name="catalog_empty">No features yet</string>
+    <string name="navigate_back">Back</string>
 </resources>
