@@ -3,8 +3,6 @@ package com.danyastry.ble.core.ble
 import android.Manifest
 import android.annotation.SuppressLint
 
-enum class BleRole { SCAN, CONNECT, ADVERTISE }
-
 @SuppressLint("InlinedApi")
 object BlePermissions {
 

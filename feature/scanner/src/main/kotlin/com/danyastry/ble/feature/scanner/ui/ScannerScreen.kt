@@ -49,7 +49,6 @@ import com.danyastry.ble.core.ui.components.SegmentedSelector
 import com.danyastry.ble.core.ui.theme.BleTheme
 import com.danyastry.ble.feature.scanner.AndroidScanner
 import com.danyastry.ble.feature.scanner.DeviceEntry
-import com.danyastry.ble.feature.scanner.DeviceFilter
 import com.danyastry.ble.feature.scanner.DeviceList
 import com.danyastry.ble.feature.scanner.R
 import com.danyastry.ble.feature.scanner.ScanFailure
@@ -88,16 +87,6 @@ fun ScannerRoute(modifier: Modifier = Modifier) {
         }
     }
 }
-
-data class ScannerActions(
-    val onStart: () -> Unit = {},
-    val onStop: () -> Unit = {},
-    val onModeChange: (ScanMode) -> Unit = {},
-    val onSensorOnlyChange: (Boolean) -> Unit = {},
-    val onFilterChange: (DeviceFilter) -> Unit = {},
-    val onSortChange: (SortOrder) -> Unit = {},
-    val onSelect: (String) -> Unit = {},
-)
 
 @Composable
 fun ScannerScreen(state: ScannerUiState, actions: ScannerActions, modifier: Modifier = Modifier) {

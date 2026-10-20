@@ -1,53 +1,6 @@
 package com.danyastry.ble.feature.scanner
 
 import com.danyastry.ble.core.ble.Advertisement
-import kotlin.math.roundToInt
-
-class ScanSample(
-    val address: String,
-    val rssi: Int,
-    val bytes: ByteArray,
-    val isConnectable: Boolean,
-    val timestampMillis: Long,
-)
-
-data class DeviceEntry(
-    val address: String,
-    val advertisement: Advertisement,
-    val bytes: ByteArray,
-    val rssi: Int,
-    val smoothedRssi: Double,
-    val isConnectable: Boolean,
-    val firstSeenMillis: Long,
-    val lastSeenMillis: Long,
-    val count: Int,
-    val averageIntervalMillis: Long?,
-) {
-    val name: String?
-        get() = advertisement.name
-
-    fun isStale(nowMillis: Long): Boolean = nowMillis - lastSeenMillis > DeviceList.STALE_MILLIS
-
-    override fun equals(other: Any?): Boolean =
-        other is DeviceEntry && other.address == address && other.count == count && other.lastSeenMillis == lastSeenMillis
-
-    override fun hashCode(): Int = 31 * (31 * address.hashCode() + count) + lastSeenMillis.hashCode()
-}
-
-enum class SortOrder { SIGNAL, NAME, FIRST_SEEN }
-
-data class DeviceFilter(
-    val nameQuery: String = "",
-    val connectableOnly: Boolean = false,
-    val hideUnnamed: Boolean = false,
-    val minRssi: Int = -100,
-) {
-    fun matches(entry: DeviceEntry): Boolean =
-        (nameQuery.isBlank() || entry.name?.contains(nameQuery.trim(), ignoreCase = true) == true || entry.address.contains(nameQuery.trim(), ignoreCase = true)) &&
-            (!connectableOnly || entry.isConnectable) &&
-            (!hideUnnamed || entry.name != null) &&
-            entry.smoothedRssi.roundToInt() >= minRssi
-}
 
 class DeviceList private constructor(private val entries: Map<String, DeviceEntry>) {
 

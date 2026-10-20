@@ -2,8 +2,6 @@ package com.danyastry.ble.feature.peripheral
 
 import kotlin.math.roundToInt
 
-data class Reading(val temperature: Double, val humidity: Double, val battery: Int)
-
 object SensorEncoding {
 
     fun temperature(celsius: Double): ByteArray = littleEndian16((celsius * 100).roundToInt())

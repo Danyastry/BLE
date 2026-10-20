@@ -15,8 +15,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.callbackFlow
 import kotlinx.coroutines.flow.distinctUntilChanged
 
-data class RadioState(val isBluetoothOn: Boolean, val isLocationOn: Boolean)
-
 object BluetoothStatus {
 
     fun hasBluetoothLe(context: Context): Boolean =

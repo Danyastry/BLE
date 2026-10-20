@@ -2,40 +2,6 @@ package com.danyastry.ble.core.ble
 
 import java.util.UUID
 
-enum class AdFlag(val bit: Int) {
-    LE_LIMITED_DISCOVERABLE(0),
-    LE_GENERAL_DISCOVERABLE(1),
-    BR_EDR_NOT_SUPPORTED(2),
-    LE_AND_BR_EDR_CONTROLLER(3),
-    LE_AND_BR_EDR_HOST(4),
-}
-
-sealed interface AdField {
-    data class Flags(val value: Int) : AdField {
-        val flags: List<AdFlag>
-            get() = AdFlag.entries.filter { value and (1 shl it.bit) != 0 }
-    }
-
-    data class ServiceUuids(val uuids: List<UUID>, val bits: Int, val isComplete: Boolean) : AdField
-
-    data class LocalName(val name: String, val isComplete: Boolean) : AdField
-
-    data class TxPower(val dbm: Int) : AdField
-
-    class ServiceData(val uuid: UUID, val data: ByteArray) : AdField
-
-    data class Appearance(val value: Int) : AdField
-
-    class ManufacturerData(val companyId: Int, val data: ByteArray) : AdField
-
-    class Unknown(val data: ByteArray) : AdField
-}
-
-class AdStructure(val offset: Int, val type: Int, val data: ByteArray, val field: AdField) {
-    val raw: ByteArray
-        get() = byteArrayOf((data.size + 1).toByte(), type.toByte()) + data
-}
-
 class Advertisement(val structures: List<AdStructure>, val malformedAt: Int?) {
 
     val name: String?
