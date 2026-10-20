@@ -27,3 +27,5 @@ rootProject.name = "ble"
 include(":app")
 include(":core:ble")
 include(":core:ui")
+
+include(":feature:peripheral")
