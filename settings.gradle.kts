@@ -29,3 +29,4 @@ include(":core:ble")
 include(":core:ui")
 
 include(":feature:peripheral")
+include(":feature:scanner")

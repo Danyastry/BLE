@@ -36,4 +36,16 @@ class BleUuidTest {
     fun `rejects values that do not fit in 16 bits`() {
         assertThrows(IllegalArgumentException::class.java) { BleUuid.fromShort(0x1_0000) }
     }
+
+    @Test
+    fun `a 32-bit uuid also expands onto the base uuid`() {
+        assertThat(BleUuid.from32(0x12345678)).isEqualTo(UUID.fromString("12345678-0000-1000-8000-00805f9b34fb"))
+    }
+
+    @Test
+    fun `assigned numbers name the common services and characteristics`() {
+        assertThat(AssignedNumbers.serviceName(BleUuid.fromShort(0x181A))).isEqualTo("Environmental Sensing")
+        assertThat(AssignedNumbers.characteristicName(BleUuid.fromShort(0x2A19))).isEqualTo("Battery Level")
+        assertThat(AssignedNumbers.serviceName(UUID.fromString("a3c87500-8ed3-4bdf-8a39-a01bebede295"))).isNull()
+    }
 }
