@@ -30,7 +30,7 @@ import com.danyastry.ble.core.ble.gatt.AndroidGattConnector
 import com.danyastry.ble.core.ble.scan.AndroidScanner
 import com.danyastry.ble.core.ui.theme.BleTheme
 import com.danyastry.ble.feature.explorer.ExplorerPhase
-import com.danyastry.ble.feature.explorer.NearbyDevice
+import com.danyastry.ble.core.ble.scan.NearbyDevice
 import com.danyastry.ble.feature.explorer.R
 
 @Composable

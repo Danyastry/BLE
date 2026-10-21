@@ -8,7 +8,7 @@ import com.danyastry.ble.core.ble.gatt.OperationRecord
 import com.danyastry.ble.core.ble.scan.ScanFailure
 import com.danyastry.ble.feature.explorer.CharacteristicValue
 import com.danyastry.ble.feature.explorer.ExplorerPhase
-import com.danyastry.ble.feature.explorer.NearbyDevice
+import com.danyastry.ble.core.ble.scan.NearbyDevice
 import com.danyastry.ble.feature.explorer.WriteDraft
 
 data class ExplorerUiState(

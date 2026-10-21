@@ -1,4 +1,4 @@
-package com.danyastry.ble.feature.peripheral
+package com.danyastry.ble.core.ble.advertise
 
 enum class AdvertiseFailure(val code: Int?) {
     DATA_TOO_LARGE(1),

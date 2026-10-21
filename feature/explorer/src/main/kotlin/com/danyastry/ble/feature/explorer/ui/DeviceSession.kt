@@ -23,6 +23,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.danyastry.ble.core.ble.AssignedNumbers
 import com.danyastry.ble.core.ble.BleUuid
+import com.danyastry.ble.core.ble.gatt.Att
 import com.danyastry.ble.core.ble.gatt.CharacteristicProperty
 import com.danyastry.ble.core.ble.gatt.CharacteristicRef
 import com.danyastry.ble.core.ble.gatt.DescriptorRef
@@ -34,7 +35,7 @@ import com.danyastry.ble.core.ble.toHex
 import com.danyastry.ble.core.ui.theme.BleTheme
 import com.danyastry.ble.feature.explorer.CharacteristicValue
 import com.danyastry.ble.feature.explorer.ExplorerPhase
-import com.danyastry.ble.feature.explorer.NearbyDevice
+import com.danyastry.ble.core.ble.scan.NearbyDevice
 import com.danyastry.ble.feature.explorer.R
 import com.danyastry.ble.feature.explorer.ValueSource
 import com.danyastry.ble.feature.explorer.WriteDraft
@@ -61,7 +62,7 @@ private fun ConnectionCard(state: ExplorerUiState, actions: ExplorerActions) {
         device?.let { Mono(it.address) }
         Text(phaseText(state), style = MaterialTheme.typography.bodyMedium)
         if (state.isConnected) {
-            Hint(pluralStringResource(R.plurals.explorer_mtu, state.mtu - ATT_HEADER_BYTES, state.mtu, state.mtu - ATT_HEADER_BYTES))
+            Hint(pluralStringResource(R.plurals.explorer_mtu, Att.payloadSize(state.mtu), state.mtu, Att.payloadSize(state.mtu)))
             state.rssi?.let { Hint(stringResource(R.string.explorer_rssi, it)) }
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 OutlinedButton(onClick = actions.onReadRssi) { Text(stringResource(R.string.explorer_read_rssi)) }
@@ -167,8 +168,6 @@ private fun WriteEditor(draft: WriteDraft, actions: ExplorerActions) {
         TextButton(onClick = actions.onCancelWrite) { Text(stringResource(R.string.explorer_cancel)) }
     }
 }
-
-private const val ATT_HEADER_BYTES = 3
 
 @Preview(showBackground = true)
 @Composable

@@ -1,5 +1,7 @@
 package com.danyastry.ble.feature.peripheral
 
+import com.danyastry.ble.core.ble.advertise.AdvertiseFailure
+
 sealed interface PeripheralEvent {
     data object AdvertisingStarted : PeripheralEvent
     data class AdvertisingFailed(val failure: AdvertiseFailure) : PeripheralEvent

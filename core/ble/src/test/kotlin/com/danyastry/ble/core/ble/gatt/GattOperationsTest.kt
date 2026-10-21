@@ -109,6 +109,16 @@ class GattOperationsTest {
     }
 
     @Test
+    fun `a request the stack throws on fails like a refused one instead of crashing`() = runTest {
+        val operations = GattOperations({ throw IllegalArgumentException("value should not be longer than max length") }, { testScheduler.currentTime }) { records += it }
+
+        val failure = runCatching { operations.execute(GattRequest.ReadRssi) }.exceptionOrNull()
+
+        assertThat(failure).isInstanceOf(GattException.NotStarted::class.java)
+        assertThat(records.single().outcome).isEqualTo(OperationOutcome.NotStarted)
+    }
+
+    @Test
     fun `a disconnect fails the running operation and everything still waiting`() = runTest {
         val operations = operations()
         val running = async { runCatching { operations.execute(GattRequest.ReadCharacteristic(temperature)) } }

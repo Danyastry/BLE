@@ -40,7 +40,7 @@ class PeerScanTest {
     fun ourParserReadsWhatTheSimulatedSensorAdvertises() = runBlocking {
         val scanner = AndroidScanner(context)
         val result = async(start = CoroutineStart.UNDISPATCHED) { scanner.events.filterIsInstance<ScanEvent.Found>().first().sample }
-        scanner.start(ScanMode.LOW_LATENCY, sensorOnly = true)
+        scanner.start(ScanMode.LOW_LATENCY, service = BleUuid.fromShort(0x181A))
         val sample = try {
             withTimeout(20_000) { result.await() }
         } finally {

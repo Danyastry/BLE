@@ -1,7 +1,6 @@
-package com.danyastry.ble.feature.explorer
+package com.danyastry.ble.core.ble.scan
 
 import com.danyastry.ble.core.ble.hexToBytes
-import com.danyastry.ble.core.ble.scan.ScanSample
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

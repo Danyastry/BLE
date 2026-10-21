@@ -11,13 +11,11 @@ import android.bluetooth.BluetoothGattService
 import android.bluetooth.BluetoothManager
 import android.bluetooth.BluetoothProfile
 import android.bluetooth.BluetoothStatusCodes
-import android.bluetooth.le.AdvertiseCallback
-import android.bluetooth.le.AdvertiseData
-import android.bluetooth.le.AdvertiseSettings
 import android.content.Context
 import android.os.Build
-import android.os.ParcelUuid
 import com.danyastry.ble.core.ble.BleUuid
+import com.danyastry.ble.core.ble.advertise.AdvertiseFailure
+import com.danyastry.ble.core.ble.advertise.BleAdvertiser
 import java.util.UUID
 import java.util.concurrent.ConcurrentHashMap
 import kotlinx.coroutines.flow.Flow
@@ -28,13 +26,13 @@ class AndroidPeripheral(context: Context) : PeripheralBackend {
 
     private val context = context.applicationContext
     private val manager = context.getSystemService(BluetoothManager::class.java)
-    private val adapter = manager?.adapter
+    private val advertiser = BleAdvertiser(context)
 
     private val _events = MutableSharedFlow<PeripheralEvent>(extraBufferCapacity = 256)
     override val events: Flow<PeripheralEvent> = _events
 
     override val deviceName: String?
-        get() = runCatching { adapter?.name }.getOrNull()
+        get() = advertiser.deviceName
 
     private var server: BluetoothGattServer? = null
     private val values = ConcurrentHashMap<SensorCharacteristic, ByteArray>()
@@ -72,7 +70,7 @@ class AndroidPeripheral(context: Context) : PeripheralBackend {
 
     override fun stop() {
         val running = server ?: return
-        adapter?.bluetoothLeAdvertiser?.stopAdvertising(advertiseCallback)
+        advertiser.stop()
         devices.values.forEach { running.cancelConnection(it) }
         running.close()
         server = null
@@ -120,34 +118,8 @@ class AndroidPeripheral(context: Context) : PeripheralBackend {
     }
 
     private fun startAdvertising() {
-        val advertiser = adapter?.bluetoothLeAdvertiser
-        if (advertiser == null || adapter?.isMultipleAdvertisementSupported != true) {
-            emit(PeripheralEvent.AdvertisingFailed(AdvertiseFailure.FEATURE_UNSUPPORTED))
-            return
-        }
-        val settings = AdvertiseSettings.Builder()
-            .setAdvertiseMode(AdvertiseSettings.ADVERTISE_MODE_LOW_LATENCY)
-            .setTxPowerLevel(AdvertiseSettings.ADVERTISE_TX_POWER_MEDIUM)
-            .setConnectable(true)
-            .setTimeout(0)
-            .build()
-        val data = AdvertiseData.Builder()
-            .setIncludeDeviceName(false)
-            .addServiceUuid(ParcelUuid(SensorProfile.ENVIRONMENTAL_SENSING))
-            .build()
-        val scanResponse = AdvertiseData.Builder()
-            .setIncludeDeviceName(true)
-            .build()
-        advertiser.startAdvertising(settings, data, scanResponse, advertiseCallback)
-    }
-
-    private val advertiseCallback = object : AdvertiseCallback() {
-        override fun onStartSuccess(settingsInEffect: AdvertiseSettings) {
-            emit(PeripheralEvent.AdvertisingStarted)
-        }
-
-        override fun onStartFailure(errorCode: Int) {
-            emit(PeripheralEvent.AdvertisingFailed(AdvertiseFailure.of(errorCode)))
+        advertiser.start(SensorProfile.ENVIRONMENTAL_SENSING) { failure ->
+            emit(if (failure == null) PeripheralEvent.AdvertisingStarted else PeripheralEvent.AdvertisingFailed(failure))
         }
     }
 

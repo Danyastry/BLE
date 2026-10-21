@@ -1,7 +1,6 @@
-package com.danyastry.ble.feature.explorer
+package com.danyastry.ble.core.ble.scan
 
 import com.danyastry.ble.core.ble.Advertisement
-import com.danyastry.ble.core.ble.scan.ScanSample
 
 class NearbyDevices private constructor(private val devices: Map<String, NearbyDevice>) {
 

@@ -23,6 +23,7 @@ import com.danyastry.ble.feature.explorer.ExplorerPhase
 import com.danyastry.ble.feature.explorer.ValueSource
 import com.danyastry.ble.feature.explorer.WriteDraft
 import com.google.common.truth.Truth.assertThat
+import java.util.UUID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -216,7 +217,7 @@ class ExplorerViewModelTest {
         val starts = mutableListOf<ScanMode>()
         var stops = 0
 
-        override fun start(mode: ScanMode, sensorOnly: Boolean) {
+        override fun start(mode: ScanMode, service: UUID?) {
             starts += mode
         }
 

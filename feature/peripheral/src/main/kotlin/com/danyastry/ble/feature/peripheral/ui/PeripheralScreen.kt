@@ -28,7 +28,7 @@ import androidx.lifecycle.viewmodel.viewModelFactory
 import com.danyastry.ble.core.ble.BleGate
 import com.danyastry.ble.core.ble.BleRole
 import com.danyastry.ble.core.ui.theme.BleTheme
-import com.danyastry.ble.feature.peripheral.AdvertiseFailure
+import com.danyastry.ble.core.ble.advertise.AdvertiseFailure
 import com.danyastry.ble.feature.peripheral.AndroidPeripheral
 import com.danyastry.ble.feature.peripheral.Central
 import com.danyastry.ble.feature.peripheral.PeripheralEvent

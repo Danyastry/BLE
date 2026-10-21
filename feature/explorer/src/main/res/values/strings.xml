@@ -16,8 +16,8 @@
     <string name="explorer_disconnected">Disconnected</string>
     <string name="explorer_disconnected_status">Disconnected: %1$s</string>
     <plurals name="explorer_mtu">
-        <item quantity="one">MTU %1$d, so up to %2$d byte per packet</item>
-        <item quantity="other">MTU %1$d, so up to %2$d bytes per packet</item>
+        <item quantity="one">MTU %1$d, so up to %2$d byte per value in one packet</item>
+        <item quantity="other">MTU %1$d, so up to %2$d bytes per value in one packet</item>
     </plurals>
     <string name="explorer_rssi">RSSI %1$d dBm</string>
     <string name="explorer_read_rssi">Read RSSI</string>
