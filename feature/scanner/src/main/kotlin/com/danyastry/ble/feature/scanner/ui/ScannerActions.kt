@@ -1,8 +1,8 @@
 package com.danyastry.ble.feature.scanner.ui
 
-import com.danyastry.ble.feature.scanner.DeviceFilter
-import com.danyastry.ble.core.ble.scan.ScanMode
-import com.danyastry.ble.feature.scanner.SortOrder
+import com.danyastry.ble.feature.scanner.model.DeviceFilter
+import com.danyastry.ble.core.ble.scan.model.ScanMode
+import com.danyastry.ble.feature.scanner.model.SortOrder
 
 data class ScannerActions(
     val onStart: () -> Unit = {},

@@ -1,8 +1,8 @@
 package com.danyastry.ble.feature.peripheral.ui
 
-import com.danyastry.ble.feature.peripheral.PeripheralState
-import com.danyastry.ble.feature.peripheral.PeripheralStatus
-import com.danyastry.ble.feature.peripheral.Reading
+import com.danyastry.ble.feature.peripheral.state.PeripheralState
+import com.danyastry.ble.feature.peripheral.state.PeripheralStatus
+import com.danyastry.ble.feature.peripheral.model.Reading
 
 data class PeripheralUiState(
     val peripheral: PeripheralState = PeripheralState(),

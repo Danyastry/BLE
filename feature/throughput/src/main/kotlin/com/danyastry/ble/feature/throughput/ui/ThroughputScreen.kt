@@ -23,20 +23,20 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.danyastry.ble.core.ble.BleGate
-import com.danyastry.ble.core.ble.BleRole
-import com.danyastry.ble.core.ble.gatt.AndroidGattConnector
-import com.danyastry.ble.core.ble.scan.AndroidScanner
-import com.danyastry.ble.core.ble.scan.NearbyDevice
+import com.danyastry.ble.core.ble.permission.BleGate
+import com.danyastry.ble.core.ble.permission.BleRole
+import com.danyastry.ble.core.ble.gatt.android.AndroidGattConnector
+import com.danyastry.ble.core.ble.scan.data.AndroidScanner
+import com.danyastry.ble.core.ble.scan.model.NearbyDevice
 import com.danyastry.ble.core.ui.components.SegmentedSelector
 import com.danyastry.ble.core.ui.theme.BleTheme
-import com.danyastry.ble.feature.throughput.Measurement
+import com.danyastry.ble.feature.throughput.model.Measurement
 import com.danyastry.ble.feature.throughput.R
-import com.danyastry.ble.feature.throughput.TestKind
-import com.danyastry.ble.feature.throughput.ThroughputProtocol
-import com.danyastry.ble.feature.throughput.server.AndroidThroughputServer
-import com.danyastry.ble.feature.throughput.server.ServerState
-import com.danyastry.ble.feature.throughput.server.ServerStatus
+import com.danyastry.ble.feature.throughput.model.TestKind
+import com.danyastry.ble.feature.throughput.logic.ThroughputProtocol
+import com.danyastry.ble.feature.throughput.server.data.AndroidThroughputServer
+import com.danyastry.ble.feature.throughput.server.state.ServerState
+import com.danyastry.ble.feature.throughput.server.state.ServerStatus
 
 @Composable
 fun ThroughputRoute(modifier: Modifier = Modifier) {

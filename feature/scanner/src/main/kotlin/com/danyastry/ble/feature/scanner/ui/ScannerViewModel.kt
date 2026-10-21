@@ -2,14 +2,14 @@ package com.danyastry.ble.feature.scanner.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.danyastry.ble.core.ble.BleUuid
-import com.danyastry.ble.core.ble.scan.ScanEvent
-import com.danyastry.ble.core.ble.scan.ScanMode
-import com.danyastry.ble.core.ble.scan.ScanThrottle
-import com.danyastry.ble.core.ble.scan.ScannerBackend
-import com.danyastry.ble.feature.scanner.DeviceFilter
-import com.danyastry.ble.feature.scanner.DeviceList
-import com.danyastry.ble.feature.scanner.SortOrder
+import com.danyastry.ble.core.ble.uuid.BleUuid
+import com.danyastry.ble.core.ble.scan.model.ScanEvent
+import com.danyastry.ble.core.ble.scan.model.ScanMode
+import com.danyastry.ble.core.ble.scan.logic.ScanThrottle
+import com.danyastry.ble.core.ble.scan.data.ScannerBackend
+import com.danyastry.ble.feature.scanner.model.DeviceFilter
+import com.danyastry.ble.feature.scanner.logic.DeviceList
+import com.danyastry.ble.feature.scanner.model.SortOrder
 import java.util.UUID
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay

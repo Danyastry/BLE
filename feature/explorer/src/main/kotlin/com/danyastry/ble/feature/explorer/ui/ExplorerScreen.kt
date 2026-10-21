@@ -24,13 +24,13 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.danyastry.ble.core.ble.BleGate
-import com.danyastry.ble.core.ble.BleRole
-import com.danyastry.ble.core.ble.gatt.AndroidGattConnector
-import com.danyastry.ble.core.ble.scan.AndroidScanner
+import com.danyastry.ble.core.ble.permission.BleGate
+import com.danyastry.ble.core.ble.permission.BleRole
+import com.danyastry.ble.core.ble.gatt.android.AndroidGattConnector
+import com.danyastry.ble.core.ble.scan.data.AndroidScanner
 import com.danyastry.ble.core.ui.theme.BleTheme
-import com.danyastry.ble.feature.explorer.ExplorerPhase
-import com.danyastry.ble.core.ble.scan.NearbyDevice
+import com.danyastry.ble.feature.explorer.model.ExplorerPhase
+import com.danyastry.ble.core.ble.scan.model.NearbyDevice
 import com.danyastry.ble.feature.explorer.R
 
 @Composable

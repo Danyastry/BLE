@@ -17,7 +17,10 @@ import android.os.Build
 import android.os.ParcelUuid
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
-import com.danyastry.ble.core.ble.BleUuid
+import com.danyastry.ble.core.ble.uuid.BleUuid
+import com.danyastry.ble.feature.peripheral.logic.SensorEncoding
+import com.danyastry.ble.feature.peripheral.model.SensorCharacteristic
+import com.danyastry.ble.feature.peripheral.model.SensorProfile
 import com.google.common.truth.Truth.assertThat
 import java.util.concurrent.LinkedBlockingQueue
 import java.util.concurrent.TimeUnit
