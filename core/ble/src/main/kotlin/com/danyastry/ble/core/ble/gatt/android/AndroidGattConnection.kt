@@ -18,11 +18,15 @@ import com.danyastry.ble.core.ble.gatt.format.Cccd
 import com.danyastry.ble.core.ble.gatt.format.GattStatus
 import com.danyastry.ble.core.ble.gatt.model.CharacteristicProperty
 import com.danyastry.ble.core.ble.gatt.model.CharacteristicRef
+import com.danyastry.ble.core.ble.gatt.model.ConnectionParameters
+import com.danyastry.ble.core.ble.gatt.model.ConnectionPriority
 import com.danyastry.ble.core.ble.gatt.model.ConnectionState
 import com.danyastry.ble.core.ble.gatt.model.DescriptorRef
 import com.danyastry.ble.core.ble.gatt.model.GattCharacteristicInfo
 import com.danyastry.ble.core.ble.gatt.model.GattServiceInfo
 import com.danyastry.ble.core.ble.gatt.model.Notification
+import com.danyastry.ble.core.ble.gatt.model.Phy
+import com.danyastry.ble.core.ble.gatt.model.PhyPair
 import com.danyastry.ble.core.ble.gatt.queue.GattException
 import com.danyastry.ble.core.ble.gatt.queue.GattOperations
 import com.danyastry.ble.core.ble.gatt.queue.GattRequest
@@ -48,6 +52,12 @@ class AndroidGattConnection(
 
     private val _mtu = MutableStateFlow(DEFAULT_MTU)
     override val mtu: StateFlow<Int> = _mtu.asStateFlow()
+
+    private val _phy = MutableStateFlow<PhyPair?>(null)
+    override val phy: StateFlow<PhyPair?> = _phy.asStateFlow()
+
+    private val _connectionParameters = MutableStateFlow<ConnectionParameters?>(null)
+    override val connectionParameters: StateFlow<ConnectionParameters?> = _connectionParameters.asStateFlow()
 
     private val _notifications = MutableSharedFlow<Notification>(extraBufferCapacity = 256)
     override val notifications: Flow<Notification> = _notifications
@@ -82,6 +92,18 @@ class AndroidGattConnection(
     }
 
     override suspend fun readRssi(): Int = (operations.execute(GattRequest.ReadRssi) as GattResponse.RssiRead).rssi
+
+    override suspend fun readPhy(): PhyPair = (operations.execute(GattRequest.ReadPhy) as GattResponse.PhyRead).phy
+
+    override suspend fun setPreferredPhy(phy: Phy): PhyPair = try {
+        (operations.execute(GattRequest.SetPreferredPhy(phy)) as GattResponse.PhyUpdated).phy
+    } catch (timeout: GattException.TimedOut) {
+        readPhy()
+    }
+
+    override suspend fun requestPriority(priority: ConnectionPriority) {
+        operations.executeWithoutAnswer(GattRequest.RequestPriority(priority))
+    }
 
     override fun close() {
         gatt?.disconnect()
@@ -126,6 +148,15 @@ class AndroidGattConnection(
                 }
             }
             GattRequest.ReadRssi -> gatt.readRemoteRssi()
+            GattRequest.ReadPhy -> {
+                gatt.readPhy()
+                true
+            }
+            is GattRequest.SetPreferredPhy -> {
+                gatt.setPreferredPhy(request.phy.mask, request.phy.mask, BluetoothDevice.PHY_OPTION_NO_PREFERRED)
+                true
+            }
+            is GattRequest.RequestPriority -> gatt.requestConnectionPriority(request.priority.value)
         }
     }
 
@@ -198,6 +229,23 @@ class AndroidGattConnection(
 
         override fun onReadRemoteRssi(gatt: BluetoothGatt, rssi: Int, status: Int) {
             operations.onResponse(GattResponse.RssiRead(status, rssi))
+        }
+
+        override fun onPhyUpdate(gatt: BluetoothGatt, txPhy: Int, rxPhy: Int, status: Int) {
+            val pair = PhyPair(Phy.of(txPhy), Phy.of(rxPhy))
+            if (status == GattStatus.SUCCESS) _phy.value = pair
+            operations.onResponse(GattResponse.PhyUpdated(status, pair))
+        }
+
+        @Suppress("unused")
+        fun onConnectionUpdated(gatt: BluetoothGatt, interval: Int, latency: Int, timeout: Int, status: Int) {
+            if (status == GattStatus.SUCCESS) _connectionParameters.value = ConnectionParameters(interval, latency, timeout)
+        }
+
+        override fun onPhyRead(gatt: BluetoothGatt, txPhy: Int, rxPhy: Int, status: Int) {
+            val pair = PhyPair(Phy.of(txPhy), Phy.of(rxPhy))
+            if (status == GattStatus.SUCCESS) _phy.value = pair
+            operations.onResponse(GattResponse.PhyRead(status, pair))
         }
     }
 

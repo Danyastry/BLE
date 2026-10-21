@@ -58,6 +58,9 @@
     <string name="request_read_descriptor">Read descriptor %1$s of %2$s</string>
     <string name="request_write_descriptor">Write descriptor %1$s of %2$s</string>
     <string name="request_rssi">Read RSSI</string>
+    <string name="request_read_phy">Read PHY</string>
+    <string name="request_set_phy">Prefer PHY %1$s</string>
+    <string name="request_priority">Request connection priority %1$s</string>
     <string name="outcome_success">OK</string>
     <string name="outcome_failed">failed with %1$s</string>
     <string name="outcome_timed_out">no answer in time</string>

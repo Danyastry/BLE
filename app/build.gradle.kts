@@ -30,6 +30,7 @@ dependencies {
     implementation(projects.feature.scanner)
     implementation(projects.feature.explorer)
     implementation(projects.feature.throughput)
+    implementation(projects.feature.connection)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)

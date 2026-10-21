@@ -2,11 +2,15 @@ package com.danyastry.ble.feature.throughput.logic
 
 import com.danyastry.ble.core.ble.gatt.connection.GattConnection
 import com.danyastry.ble.core.ble.gatt.model.CharacteristicRef
+import com.danyastry.ble.core.ble.gatt.model.ConnectionParameters
+import com.danyastry.ble.core.ble.gatt.model.ConnectionPriority
 import com.danyastry.ble.core.ble.gatt.model.ConnectionState
 import com.danyastry.ble.core.ble.gatt.model.DescriptorRef
 import com.danyastry.ble.core.ble.gatt.model.GattCharacteristicInfo
 import com.danyastry.ble.core.ble.gatt.model.GattServiceInfo
 import com.danyastry.ble.core.ble.gatt.model.Notification
+import com.danyastry.ble.core.ble.gatt.model.Phy
+import com.danyastry.ble.core.ble.gatt.model.PhyPair
 import com.danyastry.ble.core.ble.gatt.queue.OperationRecord
 import com.danyastry.ble.feature.throughput.model.Command
 import com.danyastry.ble.feature.throughput.model.Counter
@@ -27,6 +31,8 @@ class FakeThroughputConnection(
     override val address = "AA:01"
     override val state = MutableStateFlow<ConnectionState>(ConnectionState.Connected)
     override val mtu = MutableStateFlow(23)
+    override val phy = MutableStateFlow<PhyPair?>(null)
+    override val connectionParameters = MutableStateFlow<ConnectionParameters?>(null)
     override val notifications = MutableSharedFlow<Notification>()
     override val records = MutableSharedFlow<OperationRecord>()
 
@@ -78,6 +84,12 @@ class FakeThroughputConnection(
     }
 
     override suspend fun readRssi(): Int = -50
+
+    override suspend fun readPhy() = PhyPair(Phy.LE_1M, Phy.LE_1M)
+
+    override suspend fun setPreferredPhy(phy: Phy) = PhyPair(phy, phy)
+
+    override suspend fun requestPriority(priority: ConnectionPriority) = Unit
 
     override fun close() {
         closed = true

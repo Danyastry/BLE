@@ -3,6 +3,7 @@ package com.danyastry.ble.core.ble.gatt.queue
 import com.danyastry.ble.core.ble.gatt.model.CharacteristicRef
 import com.danyastry.ble.core.ble.gatt.model.DescriptorRef
 import com.danyastry.ble.core.ble.gatt.model.GattServiceInfo
+import com.danyastry.ble.core.ble.gatt.model.PhyPair
 
 sealed interface GattResponse {
     val status: Int
@@ -35,5 +36,13 @@ sealed interface GattResponse {
 
     data class RssiRead(override val status: Int, val rssi: Int) : GattResponse {
         override fun answers(request: GattRequest) = request is GattRequest.ReadRssi
+    }
+
+    data class PhyUpdated(override val status: Int, val phy: PhyPair) : GattResponse {
+        override fun answers(request: GattRequest) = request is GattRequest.SetPreferredPhy
+    }
+
+    data class PhyRead(override val status: Int, val phy: PhyPair) : GattResponse {
+        override fun answers(request: GattRequest) = request is GattRequest.ReadPhy
     }
 }

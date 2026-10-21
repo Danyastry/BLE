@@ -2,7 +2,10 @@ package com.danyastry.ble.core.ble.gatt.format
 
 import com.danyastry.ble.core.ble.gatt.model.CharacteristicProperty
 import com.danyastry.ble.core.ble.gatt.model.CharacteristicRef
+import com.danyastry.ble.core.ble.gatt.model.ConnectionParameters
+import com.danyastry.ble.core.ble.gatt.model.ConnectionPriority
 import com.danyastry.ble.core.ble.gatt.model.GattCharacteristicInfo
+import com.danyastry.ble.core.ble.gatt.model.Phy
 import com.danyastry.ble.core.ble.uuid.BleUuid
 import com.google.common.truth.Truth.assertThat
 import java.util.UUID
@@ -32,6 +35,32 @@ class GattHelpersTest {
         assertThat(Att.payloadSize(247)).isEqualTo(244)
         assertThat(Att.payloadSize(515)).isEqualTo(512)
         assertThat(Att.payloadSize(517)).isEqualTo(512)
+    }
+
+    @Test
+    fun `phy values and masks follow the android constants`() {
+        assertThat(Phy.of(2)).isEqualTo(Phy.LE_2M)
+        assertThat(Phy.of(99)).isEqualTo(Phy.LE_1M)
+        assertThat(Phy.entries.map { it.mask }).containsExactly(1, 2, 4).inOrder()
+    }
+
+    @Test
+    fun `priorities carry the android values and documented interval ranges`() {
+        assertThat(ConnectionPriority.HIGH.value).isEqualTo(1)
+        assertThat(ConnectionPriority.LOW_POWER.minIntervalMillis).isGreaterThan(ConnectionPriority.BALANCED.maxIntervalMillis)
+        assertThat(ConnectionPriority.BALANCED.minIntervalMillis).isGreaterThan(ConnectionPriority.HIGH.maxIntervalMillis)
+    }
+
+    @Test
+    fun `connection parameters convert the stack units into milliseconds`() {
+        val high = ConnectionParameters(intervalUnits = 12, peripheralLatency = 0, supervisionTimeoutUnits = 500)
+        val lowPower = ConnectionParameters(intervalUnits = 100, peripheralLatency = 2, supervisionTimeoutUnits = 500)
+
+        assertThat(high.intervalMillis).isEqualTo(15.0)
+        assertThat(high.supervisionTimeoutMillis).isEqualTo(5_000)
+        assertThat(high.fits(ConnectionPriority.HIGH)).isTrue()
+        assertThat(high.fits(ConnectionPriority.LOW_POWER)).isFalse()
+        assertThat(lowPower.fits(ConnectionPriority.LOW_POWER)).isTrue()
     }
 
     @Test
