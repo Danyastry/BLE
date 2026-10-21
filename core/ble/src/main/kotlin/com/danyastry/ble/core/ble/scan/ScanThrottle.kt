@@ -1,14 +1,16 @@
-package com.danyastry.ble.feature.scanner
+package com.danyastry.ble.core.ble.scan
 
 class ScanThrottle(private val maxStarts: Int = MAX_STARTS, private val windowMillis: Long = WINDOW_MILLIS) {
 
     private val starts = ArrayDeque<Long>()
 
+    @Synchronized
     fun waitMillis(nowMillis: Long): Long {
         dropOld(nowMillis)
         return if (starts.size < maxStarts) 0 else starts.first() + windowMillis - nowMillis
     }
 
+    @Synchronized
     fun tryStart(nowMillis: Long): Boolean {
         if (waitMillis(nowMillis) > 0) return false
         starts.addLast(nowMillis)
@@ -22,5 +24,7 @@ class ScanThrottle(private val maxStarts: Int = MAX_STARTS, private val windowMi
     companion object {
         const val MAX_STARTS = 5
         const val WINDOW_MILLIS = 30_000L
+
+        val shared = ScanThrottle()
     }
 }

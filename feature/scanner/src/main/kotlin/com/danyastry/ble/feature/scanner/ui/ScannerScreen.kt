@@ -47,13 +47,13 @@ import com.danyastry.ble.core.ble.hexToBytes
 import com.danyastry.ble.core.ble.toHex
 import com.danyastry.ble.core.ui.components.SegmentedSelector
 import com.danyastry.ble.core.ui.theme.BleTheme
-import com.danyastry.ble.feature.scanner.AndroidScanner
+import com.danyastry.ble.core.ble.scan.AndroidScanner
 import com.danyastry.ble.feature.scanner.DeviceEntry
 import com.danyastry.ble.feature.scanner.DeviceList
 import com.danyastry.ble.feature.scanner.R
-import com.danyastry.ble.feature.scanner.ScanFailure
-import com.danyastry.ble.feature.scanner.ScanMode
-import com.danyastry.ble.feature.scanner.ScanSample
+import com.danyastry.ble.core.ble.scan.ScanFailure
+import com.danyastry.ble.core.ble.scan.ScanMode
+import com.danyastry.ble.core.ble.scan.ScanSample
 import com.danyastry.ble.feature.scanner.SortOrder
 import java.util.UUID
 import kotlin.math.roundToInt

@@ -1,4 +1,4 @@
-package com.danyastry.ble.feature.scanner
+package com.danyastry.ble.core.ble.scan
 
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test

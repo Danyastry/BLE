@@ -23,6 +23,7 @@ object AssignedNumbers {
     private val characteristics = mapOf(
         0x2A00 to "Device Name",
         0x2A01 to "Appearance",
+        0x2A04 to "Peripheral Preferred Connection Parameters",
         0x2A05 to "Service Changed",
         0x2A19 to "Battery Level",
         0x2A24 to "Model Number String",
@@ -30,6 +31,10 @@ object AssignedNumbers {
         0x2A37 to "Heart Rate Measurement",
         0x2A6E to "Temperature",
         0x2A6F to "Humidity",
+        0x2AA6 to "Central Address Resolution",
+        0x2B29 to "Client Supported Features",
+        0x2B2A to "Database Hash",
+        0x2B3A to "Server Supported Features",
     )
 
     private val companies = mapOf(

@@ -1,12 +1,13 @@
 package com.danyastry.ble.feature.scanner.ui
 
 import com.danyastry.ble.core.ble.hexToBytes
+import com.danyastry.ble.core.ble.scan.ScanEvent
+import com.danyastry.ble.core.ble.scan.ScanFailure
+import com.danyastry.ble.core.ble.scan.ScanMode
+import com.danyastry.ble.core.ble.scan.ScanSample
+import com.danyastry.ble.core.ble.scan.ScanThrottle
+import com.danyastry.ble.core.ble.scan.ScannerBackend
 import com.danyastry.ble.feature.scanner.DeviceFilter
-import com.danyastry.ble.feature.scanner.ScanEvent
-import com.danyastry.ble.feature.scanner.ScanFailure
-import com.danyastry.ble.feature.scanner.ScanMode
-import com.danyastry.ble.feature.scanner.ScanSample
-import com.danyastry.ble.feature.scanner.ScannerBackend
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -34,7 +35,7 @@ class ScannerViewModelTest {
     @Before
     fun setUp() {
         Dispatchers.setMain(dispatcher)
-        viewModel = ScannerViewModel(backend, clock = { dispatcher.scheduler.currentTime })
+        viewModel = ScannerViewModel(backend, clock = { dispatcher.scheduler.currentTime }, throttle = ScanThrottle())
     }
 
     @After

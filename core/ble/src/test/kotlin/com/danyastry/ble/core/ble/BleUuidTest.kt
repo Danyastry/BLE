@@ -46,6 +46,7 @@ class BleUuidTest {
     fun `assigned numbers name the common services and characteristics`() {
         assertThat(AssignedNumbers.serviceName(BleUuid.fromShort(0x181A))).isEqualTo("Environmental Sensing")
         assertThat(AssignedNumbers.characteristicName(BleUuid.fromShort(0x2A19))).isEqualTo("Battery Level")
+        assertThat(AssignedNumbers.characteristicName(BleUuid.fromShort(0x2B2A))).isEqualTo("Database Hash")
         assertThat(AssignedNumbers.serviceName(UUID.fromString("a3c87500-8ed3-4bdf-8a39-a01bebede295"))).isNull()
     }
 }

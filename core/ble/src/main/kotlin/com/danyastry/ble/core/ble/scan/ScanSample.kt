@@ -1,4 +1,4 @@
-package com.danyastry.ble.feature.scanner
+package com.danyastry.ble.core.ble.scan
 
 class ScanSample(
     val address: String,

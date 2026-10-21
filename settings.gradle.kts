@@ -30,3 +30,4 @@ include(":core:ui")
 
 include(":feature:peripheral")
 include(":feature:scanner")
+include(":feature:explorer")
