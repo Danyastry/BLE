@@ -9,6 +9,7 @@ import com.danyastry.ble.core.ble.scan.ScanThrottle
 import com.danyastry.ble.core.ble.scan.ScannerBackend
 import com.danyastry.ble.feature.scanner.DeviceFilter
 import com.google.common.truth.Truth.assertThat
+import java.util.UUID
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -168,8 +169,8 @@ class ScannerViewModelTest {
         override val events = MutableSharedFlow<ScanEvent>()
         val starts = mutableListOf<Pair<ScanMode, Boolean>>()
 
-        override fun start(mode: ScanMode, sensorOnly: Boolean) {
-            starts += mode to sensorOnly
+        override fun start(mode: ScanMode, service: UUID?) {
+            starts += mode to (service == ScannerViewModel.SENSOR_SERVICE)
         }
 
         override fun stop() = Unit

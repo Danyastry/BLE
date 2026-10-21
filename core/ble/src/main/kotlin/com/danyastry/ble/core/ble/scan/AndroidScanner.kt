@@ -8,7 +8,7 @@ import android.bluetooth.le.ScanResult
 import android.bluetooth.le.ScanSettings
 import android.content.Context
 import android.os.ParcelUuid
-import com.danyastry.ble.core.ble.BleUuid
+import java.util.UUID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableSharedFlow
 
@@ -22,7 +22,7 @@ class AndroidScanner(context: Context) : ScannerBackend {
 
     private var isScanning = false
 
-    override fun start(mode: ScanMode, sensorOnly: Boolean) {
+    override fun start(mode: ScanMode, service: UUID?) {
         val scanner = adapter?.bluetoothLeScanner
         if (scanner == null) {
             _events.tryEmit(ScanEvent.Failed(ScanFailure.FEATURE_UNSUPPORTED))
@@ -40,7 +40,7 @@ class AndroidScanner(context: Context) : ScannerBackend {
             .setCallbackType(ScanSettings.CALLBACK_TYPE_ALL_MATCHES)
             .setReportDelay(0)
             .build()
-        val filters = if (sensorOnly) listOf(ScanFilter.Builder().setServiceUuid(ParcelUuid(SENSOR_SERVICE)).build()) else emptyList()
+        val filters = service?.let { listOf(ScanFilter.Builder().setServiceUuid(ParcelUuid(it)).build()) } ?: emptyList()
         scanner.startScan(filters, settings, callback)
         isScanning = true
     }
@@ -73,8 +73,4 @@ class AndroidScanner(context: Context) : ScannerBackend {
         isConnectable = isConnectable,
         timestampMillis = timestampNanos / 1_000_000,
     )
-
-    companion object {
-        val SENSOR_SERVICE = BleUuid.fromShort(0x181A)
-    }
 }

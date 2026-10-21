@@ -24,6 +24,14 @@ class GattHelpersTest {
     }
 
     @Test
+    fun `a packet carries the mtu minus the att header, but never more than 512 bytes`() {
+        assertThat(Att.payloadSize(23)).isEqualTo(20)
+        assertThat(Att.payloadSize(247)).isEqualTo(244)
+        assertThat(Att.payloadSize(515)).isEqualTo(512)
+        assertThat(Att.payloadSize(517)).isEqualTo(512)
+    }
+
+    @Test
     fun `status codes are shown with their names`() {
         assertThat(GattStatus.label(0)).isEqualTo("0 SUCCESS")
         assertThat(GattStatus.label(133)).isEqualTo("133 GATT_ERROR")

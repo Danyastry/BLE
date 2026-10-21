@@ -32,7 +32,7 @@ class GattOperations(
                 if (!isConnected) throw GattException.Disconnected(request)
                 val response = CompletableDeferred<GattResponse>()
                 pending = Pending(request, response)
-                if (!transport.start(request)) throw GattException.NotStarted(request)
+                if (!runCatching { transport.start(request) }.getOrDefault(false)) throw GattException.NotStarted(request)
                 val answer = try {
                     withTimeout(timeoutMillis) { response.await() }
                 } catch (timeout: TimeoutCancellationException) {

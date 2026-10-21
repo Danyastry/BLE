@@ -15,8 +15,8 @@ import com.danyastry.ble.core.ble.scan.ScanThrottle
 import com.danyastry.ble.core.ble.scan.ScannerBackend
 import com.danyastry.ble.feature.explorer.CharacteristicValue
 import com.danyastry.ble.feature.explorer.ExplorerPhase
-import com.danyastry.ble.feature.explorer.NearbyDevice
-import com.danyastry.ble.feature.explorer.NearbyDevices
+import com.danyastry.ble.core.ble.scan.NearbyDevice
+import com.danyastry.ble.core.ble.scan.NearbyDevices
 import com.danyastry.ble.feature.explorer.ValueSource
 import com.danyastry.ble.feature.explorer.WriteDraft
 import kotlinx.coroutines.Job
@@ -61,7 +61,7 @@ class ExplorerViewModel(
             _state.update { it.copy(waitSeconds = ((throttle.waitMillis(now) + 999) / 1000).toInt()) }
             return
         }
-        scanner.start(ScanMode.LOW_LATENCY, sensorOnly = false)
+        scanner.start(ScanMode.LOW_LATENCY, service = null)
         _state.update { it.copy(isScanning = true, waitSeconds = 0, scanFailure = null) }
     }
 

@@ -1,5 +1,7 @@
 package com.danyastry.ble.feature.peripheral
 
+import com.danyastry.ble.core.ble.advertise.AdvertiseFailure
+
 data class PeripheralState(
     val status: PeripheralStatus = PeripheralStatus.STOPPED,
     val failure: AdvertiseFailure? = null,

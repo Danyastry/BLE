@@ -1,5 +1,6 @@
 package com.danyastry.ble.feature.peripheral
 
+import com.danyastry.ble.core.ble.advertise.AdvertiseFailure
 import com.google.common.truth.Truth.assertThat
 import org.junit.Test
 

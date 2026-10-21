@@ -95,7 +95,7 @@ class PeerExplorerTest {
         val scanner = AndroidScanner(context)
         return coroutineScope {
             val found = async(start = CoroutineStart.UNDISPATCHED) { scanner.events.filterIsInstance<ScanEvent.Found>().first().sample.address }
-            scanner.start(ScanMode.LOW_LATENCY, sensorOnly = true)
+            scanner.start(ScanMode.LOW_LATENCY, service = environmentalSensing)
             try {
                 withTimeout(20_000) { found.await() }
             } finally {

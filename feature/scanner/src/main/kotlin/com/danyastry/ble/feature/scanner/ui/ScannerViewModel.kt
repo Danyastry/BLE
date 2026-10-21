@@ -2,13 +2,15 @@ package com.danyastry.ble.feature.scanner.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.danyastry.ble.feature.scanner.DeviceFilter
-import com.danyastry.ble.feature.scanner.DeviceList
+import com.danyastry.ble.core.ble.BleUuid
 import com.danyastry.ble.core.ble.scan.ScanEvent
 import com.danyastry.ble.core.ble.scan.ScanMode
 import com.danyastry.ble.core.ble.scan.ScanThrottle
 import com.danyastry.ble.core.ble.scan.ScannerBackend
+import com.danyastry.ble.feature.scanner.DeviceFilter
+import com.danyastry.ble.feature.scanner.DeviceList
 import com.danyastry.ble.feature.scanner.SortOrder
+import java.util.UUID
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -102,7 +104,7 @@ class ScannerViewModel(
             refresh()
             return
         }
-        backend.start(_state.value.mode, _state.value.sensorOnly)
+        backend.start(_state.value.mode, if (_state.value.sensorOnly) SENSOR_SERVICE else null)
         _state.update { it.copy(isScanning = true, failure = null) }
         startTicker()
         refresh()
@@ -139,5 +141,6 @@ class ScannerViewModel(
 
     companion object {
         const val TICK_MILLIS = 1_000L
+        val SENSOR_SERVICE: UUID = BleUuid.fromShort(0x181A)
     }
 }
