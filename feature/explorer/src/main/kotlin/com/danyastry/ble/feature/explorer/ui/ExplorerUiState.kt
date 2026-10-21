@@ -1,15 +1,15 @@
 package com.danyastry.ble.feature.explorer.ui
 
-import com.danyastry.ble.core.ble.gatt.AndroidGattConnection
-import com.danyastry.ble.core.ble.gatt.CharacteristicRef
-import com.danyastry.ble.core.ble.gatt.DescriptorRef
-import com.danyastry.ble.core.ble.gatt.GattServiceInfo
-import com.danyastry.ble.core.ble.gatt.OperationRecord
-import com.danyastry.ble.core.ble.scan.ScanFailure
-import com.danyastry.ble.feature.explorer.CharacteristicValue
-import com.danyastry.ble.feature.explorer.ExplorerPhase
-import com.danyastry.ble.core.ble.scan.NearbyDevice
-import com.danyastry.ble.feature.explorer.WriteDraft
+import com.danyastry.ble.core.ble.gatt.android.AndroidGattConnection
+import com.danyastry.ble.core.ble.gatt.model.CharacteristicRef
+import com.danyastry.ble.core.ble.gatt.model.DescriptorRef
+import com.danyastry.ble.core.ble.gatt.model.GattServiceInfo
+import com.danyastry.ble.core.ble.gatt.queue.OperationRecord
+import com.danyastry.ble.core.ble.scan.model.ScanFailure
+import com.danyastry.ble.feature.explorer.model.CharacteristicValue
+import com.danyastry.ble.feature.explorer.model.ExplorerPhase
+import com.danyastry.ble.core.ble.scan.model.NearbyDevice
+import com.danyastry.ble.feature.explorer.model.WriteDraft
 
 data class ExplorerUiState(
     val phase: ExplorerPhase = ExplorerPhase.PICKING,

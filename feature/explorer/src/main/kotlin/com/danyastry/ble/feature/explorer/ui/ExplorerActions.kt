@@ -1,9 +1,9 @@
 package com.danyastry.ble.feature.explorer.ui
 
-import com.danyastry.ble.core.ble.gatt.CharacteristicRef
-import com.danyastry.ble.core.ble.gatt.DescriptorRef
-import com.danyastry.ble.core.ble.gatt.GattCharacteristicInfo
-import com.danyastry.ble.feature.explorer.WriteDraft
+import com.danyastry.ble.core.ble.gatt.model.CharacteristicRef
+import com.danyastry.ble.core.ble.gatt.model.DescriptorRef
+import com.danyastry.ble.core.ble.gatt.model.GattCharacteristicInfo
+import com.danyastry.ble.feature.explorer.model.WriteDraft
 
 data class ExplorerActions(
     val onStartScan: () -> Unit = {},

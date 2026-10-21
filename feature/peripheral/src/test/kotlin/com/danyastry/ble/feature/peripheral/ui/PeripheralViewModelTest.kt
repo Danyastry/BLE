@@ -1,11 +1,11 @@
 package com.danyastry.ble.feature.peripheral.ui
 
-import com.danyastry.ble.feature.peripheral.PeripheralBackend
-import com.danyastry.ble.feature.peripheral.PeripheralEvent
-import com.danyastry.ble.feature.peripheral.PeripheralStatus
-import com.danyastry.ble.feature.peripheral.Reading
-import com.danyastry.ble.feature.peripheral.SensorCharacteristic
-import com.danyastry.ble.feature.peripheral.SensorSimulator
+import com.danyastry.ble.feature.peripheral.data.PeripheralBackend
+import com.danyastry.ble.feature.peripheral.state.PeripheralEvent
+import com.danyastry.ble.feature.peripheral.state.PeripheralStatus
+import com.danyastry.ble.feature.peripheral.model.Reading
+import com.danyastry.ble.feature.peripheral.model.SensorCharacteristic
+import com.danyastry.ble.feature.peripheral.logic.SensorSimulator
 import com.google.common.truth.Truth.assertThat
 import kotlin.random.Random
 import kotlinx.coroutines.Dispatchers

@@ -1,10 +1,10 @@
 package com.danyastry.ble.feature.throughput.ui
 
-import com.danyastry.ble.core.ble.gatt.OperationOutcome
-import com.danyastry.ble.core.ble.scan.NearbyDevice
-import com.danyastry.ble.feature.throughput.Measurement
-import com.danyastry.ble.feature.throughput.TestStep
-import com.danyastry.ble.feature.throughput.server.ServerState
+import com.danyastry.ble.core.ble.gatt.queue.OperationOutcome
+import com.danyastry.ble.core.ble.scan.model.NearbyDevice
+import com.danyastry.ble.feature.throughput.model.Measurement
+import com.danyastry.ble.feature.throughput.model.TestStep
+import com.danyastry.ble.feature.throughput.server.state.ServerState
 
 data class ThroughputUiState(
     val role: ThroughputRole = ThroughputRole.MEASURE,

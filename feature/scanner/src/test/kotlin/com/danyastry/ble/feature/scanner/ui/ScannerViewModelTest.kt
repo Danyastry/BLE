@@ -1,13 +1,13 @@
 package com.danyastry.ble.feature.scanner.ui
 
-import com.danyastry.ble.core.ble.hexToBytes
-import com.danyastry.ble.core.ble.scan.ScanEvent
-import com.danyastry.ble.core.ble.scan.ScanFailure
-import com.danyastry.ble.core.ble.scan.ScanMode
-import com.danyastry.ble.core.ble.scan.ScanSample
-import com.danyastry.ble.core.ble.scan.ScanThrottle
-import com.danyastry.ble.core.ble.scan.ScannerBackend
-import com.danyastry.ble.feature.scanner.DeviceFilter
+import com.danyastry.ble.core.ble.scan.data.ScannerBackend
+import com.danyastry.ble.core.ble.scan.logic.ScanThrottle
+import com.danyastry.ble.core.ble.scan.model.ScanEvent
+import com.danyastry.ble.core.ble.scan.model.ScanFailure
+import com.danyastry.ble.core.ble.scan.model.ScanMode
+import com.danyastry.ble.core.ble.scan.model.ScanSample
+import com.danyastry.ble.core.ble.util.hexToBytes
+import com.danyastry.ble.feature.scanner.model.DeviceFilter
 import com.google.common.truth.Truth.assertThat
 import java.util.UUID
 import kotlinx.coroutines.Dispatchers

@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import com.danyastry.ble.core.ble.gatt.GattStatus
-import com.danyastry.ble.core.ble.gatt.OperationOutcome
+import com.danyastry.ble.core.ble.gatt.format.GattStatus
+import com.danyastry.ble.core.ble.gatt.queue.OperationOutcome
 import com.danyastry.ble.feature.throughput.R
 
 @Composable

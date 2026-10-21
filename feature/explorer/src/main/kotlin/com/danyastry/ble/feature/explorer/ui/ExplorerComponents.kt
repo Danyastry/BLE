@@ -14,12 +14,12 @@ import androidx.compose.ui.res.pluralStringResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.unit.dp
-import com.danyastry.ble.core.ble.AssignedNumbers
-import com.danyastry.ble.core.ble.BleUuid
-import com.danyastry.ble.core.ble.gatt.GattRequest
-import com.danyastry.ble.core.ble.gatt.GattStatus
-import com.danyastry.ble.core.ble.gatt.OperationOutcome
-import com.danyastry.ble.core.ble.gatt.OperationRecord
+import com.danyastry.ble.core.ble.uuid.AssignedNumbers
+import com.danyastry.ble.core.ble.uuid.BleUuid
+import com.danyastry.ble.core.ble.gatt.queue.GattRequest
+import com.danyastry.ble.core.ble.gatt.format.GattStatus
+import com.danyastry.ble.core.ble.gatt.queue.OperationOutcome
+import com.danyastry.ble.core.ble.gatt.queue.OperationRecord
 import com.danyastry.ble.feature.explorer.R
 import java.util.UUID
 

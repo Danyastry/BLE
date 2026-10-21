@@ -2,9 +2,9 @@ package com.danyastry.ble.feature.peripheral.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.danyastry.ble.feature.peripheral.PeripheralBackend
-import com.danyastry.ble.feature.peripheral.PeripheralStatus
-import com.danyastry.ble.feature.peripheral.SensorSimulator
+import com.danyastry.ble.feature.peripheral.data.PeripheralBackend
+import com.danyastry.ble.feature.peripheral.logic.SensorSimulator
+import com.danyastry.ble.feature.peripheral.state.PeripheralStatus
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
