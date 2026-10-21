@@ -1,0 +1,66 @@
+<resources>
+    <string name="explorer_intro">Pick a connectable device. The simulated sensor on another phone is a good first target.</string>
+    <string name="explorer_scan">Scan for devices</string>
+    <string name="explorer_stop_scan">Stop scanning</string>
+    <plurals name="explorer_wait">
+        <item quantity="one">Android allows 5 scan starts in 30 seconds. Try again in %1$d second.</item>
+        <item quantity="other">Android allows 5 scan starts in 30 seconds. Try again in %1$d seconds.</item>
+    </plurals>
+    <string name="explorer_scan_failed">Scan failed with code %1$d</string>
+    <string name="explorer_no_devices">No connectable devices yet</string>
+    <string name="explorer_unnamed">Unnamed</string>
+    <string name="explorer_device_row">%1$s · %2$d dBm</string>
+    <string name="explorer_connecting">Connecting</string>
+    <string name="explorer_discovering">Connected, discovering services</string>
+    <string name="explorer_ready">Connected</string>
+    <string name="explorer_disconnected">Disconnected</string>
+    <string name="explorer_disconnected_status">Disconnected: %1$s</string>
+    <plurals name="explorer_mtu">
+        <item quantity="one">MTU %1$d, so up to %2$d byte per packet</item>
+        <item quantity="other">MTU %1$d, so up to %2$d bytes per packet</item>
+    </plurals>
+    <string name="explorer_rssi">RSSI %1$d dBm</string>
+    <string name="explorer_read_rssi">Read RSSI</string>
+    <string name="explorer_disconnect">Disconnect</string>
+    <string name="explorer_connect">Connect</string>
+    <string name="explorer_reconnect">Connect again</string>
+    <string name="explorer_back">Back to the device list</string>
+    <string name="explorer_custom_service">Custom service</string>
+    <string name="explorer_unknown_characteristic">Unknown characteristic</string>
+    <string name="explorer_read">Read</string>
+    <string name="explorer_write">Write</string>
+    <string name="explorer_notify_on">Subscribe</string>
+    <string name="explorer_notify_off">Unsubscribe</string>
+    <string name="explorer_value_read">Read: %1$s</string>
+    <string name="explorer_value_notified">Notification %1$d: %2$s</string>
+    <string name="explorer_descriptor">Descriptor %1$s</string>
+    <string name="explorer_descriptor_value">%1$s: %2$s</string>
+    <string name="explorer_write_hint">Value to write</string>
+    <string name="explorer_write_as_hex">Hex bytes, for example 01 A0 FF</string>
+    <string name="explorer_write_invalid">That is not valid hex</string>
+    <string name="explorer_write_with_response">Write with response</string>
+    <string name="explorer_write_without_response">Without response</string>
+    <string name="explorer_cancel">Cancel</string>
+    <string name="explorer_log">Operations, one at a time</string>
+    <string name="explorer_log_empty">Nothing yet</string>
+    <string name="explorer_log_row">%1$s · waited %2$d ms · took %3$d ms · %4$s</string>
+    <string name="request_discover">Discover services</string>
+    <string name="request_mtu">Request MTU %1$d</string>
+    <string name="request_read">Read %1$s</string>
+    <plurals name="request_write">
+        <item quantity="one">Write %1$d byte to %2$s</item>
+        <item quantity="other">Write %1$d bytes to %2$s</item>
+    </plurals>
+    <plurals name="request_write_no_response">
+        <item quantity="one">Write %1$d byte to %2$s without response</item>
+        <item quantity="other">Write %1$d bytes to %2$s without response</item>
+    </plurals>
+    <string name="request_read_descriptor">Read descriptor %1$s of %2$s</string>
+    <string name="request_write_descriptor">Write descriptor %1$s of %2$s</string>
+    <string name="request_rssi">Read RSSI</string>
+    <string name="outcome_success">OK</string>
+    <string name="outcome_failed">failed with %1$s</string>
+    <string name="outcome_timed_out">no answer in time</string>
+    <string name="outcome_disconnected">not connected</string>
+    <string name="outcome_not_started">refused by the Bluetooth stack</string>
+</resources>

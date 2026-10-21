@@ -11,4 +11,6 @@ dependencies {
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.material3)
     implementation(libs.androidx.lifecycle.runtime.compose)
+
+    testImplementation(libs.kotlinx.coroutines.test)
 }

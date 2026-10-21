@@ -1,6 +1,7 @@
 package com.danyastry.ble.feature.scanner
 
 import com.danyastry.ble.core.ble.Advertisement
+import com.danyastry.ble.core.ble.scan.ScanSample
 
 class DeviceList private constructor(private val entries: Map<String, DeviceEntry>) {
 

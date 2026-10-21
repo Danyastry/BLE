@@ -4,10 +4,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.danyastry.ble.feature.scanner.DeviceFilter
 import com.danyastry.ble.feature.scanner.DeviceList
-import com.danyastry.ble.feature.scanner.ScanEvent
-import com.danyastry.ble.feature.scanner.ScanMode
-import com.danyastry.ble.feature.scanner.ScanThrottle
-import com.danyastry.ble.feature.scanner.ScannerBackend
+import com.danyastry.ble.core.ble.scan.ScanEvent
+import com.danyastry.ble.core.ble.scan.ScanMode
+import com.danyastry.ble.core.ble.scan.ScanThrottle
+import com.danyastry.ble.core.ble.scan.ScannerBackend
 import com.danyastry.ble.feature.scanner.SortOrder
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 class ScannerViewModel(
     private val backend: ScannerBackend,
     private val clock: () -> Long,
-    private val throttle: ScanThrottle = ScanThrottle(),
+    private val throttle: ScanThrottle = ScanThrottle.shared,
     private val tickMillis: Long = TICK_MILLIS,
 ) : ViewModel() {
 

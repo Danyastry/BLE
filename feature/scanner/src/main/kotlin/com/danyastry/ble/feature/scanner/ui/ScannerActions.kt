@@ -1,7 +1,7 @@
 package com.danyastry.ble.feature.scanner.ui
 
 import com.danyastry.ble.feature.scanner.DeviceFilter
-import com.danyastry.ble.feature.scanner.ScanMode
+import com.danyastry.ble.core.ble.scan.ScanMode
 import com.danyastry.ble.feature.scanner.SortOrder
 
 data class ScannerActions(
