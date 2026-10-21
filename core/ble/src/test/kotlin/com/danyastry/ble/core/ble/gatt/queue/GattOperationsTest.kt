@@ -2,7 +2,10 @@ package com.danyastry.ble.core.ble.gatt.queue
 
 import com.danyastry.ble.core.ble.gatt.format.Cccd
 import com.danyastry.ble.core.ble.gatt.model.CharacteristicRef
+import com.danyastry.ble.core.ble.gatt.model.ConnectionPriority
 import com.danyastry.ble.core.ble.gatt.model.DescriptorRef
+import com.danyastry.ble.core.ble.gatt.model.Phy
+import com.danyastry.ble.core.ble.gatt.model.PhyPair
 import com.danyastry.ble.core.ble.uuid.BleUuid
 import com.google.common.truth.Truth.assertThat
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -153,6 +156,42 @@ class GattOperationsTest {
         assertThat(records.map { it.waitedMillis }).containsExactly(0L, 40L).inOrder()
         assertThat(records.map { it.tookMillis }).containsExactly(40L, 25L).inOrder()
         assertThat(records.map { it.outcome }).containsExactly(OperationOutcome.Success, OperationOutcome.Success)
+    }
+
+    @Test
+    fun `a call without a callback waits its turn in the queue and is recorded`() = runTest {
+        val operations = operations()
+        val read = async { operations.execute(GattRequest.ReadCharacteristic(temperature)) }
+        val priority = async { operations.executeWithoutAnswer(GattRequest.RequestPriority(ConnectionPriority.HIGH)) }
+        runCurrent()
+
+        assertThat(started).containsExactly(GattRequest.ReadCharacteristic(temperature))
+
+        operations.onResponse(read(temperature))
+        read.await()
+        priority.await()
+
+        assertThat(started.last()).isEqualTo(GattRequest.RequestPriority(ConnectionPriority.HIGH))
+        assertThat(records.map { it.request }).containsExactly(GattRequest.ReadCharacteristic(temperature), GattRequest.RequestPriority(ConnectionPriority.HIGH)).inOrder()
+    }
+
+    @Test
+    fun `a refused call without a callback fails at once`() = runTest {
+        accept = false
+        val operations = operations()
+
+        val failure = runCatching { operations.executeWithoutAnswer(GattRequest.RequestPriority(ConnectionPriority.LOW_POWER)) }.exceptionOrNull()
+
+        assertThat(failure).isInstanceOf(GattException.NotStarted::class.java)
+    }
+
+    @Test
+    fun `phy answers match only phy requests`() {
+        val pair = PhyPair(Phy.LE_2M, Phy.LE_2M)
+
+        assertThat(GattResponse.PhyUpdated(0, pair).answers(GattRequest.SetPreferredPhy(Phy.LE_2M))).isTrue()
+        assertThat(GattResponse.PhyUpdated(0, pair).answers(GattRequest.ReadPhy)).isFalse()
+        assertThat(GattResponse.PhyRead(0, pair).answers(GattRequest.ReadPhy)).isTrue()
     }
 
     @Test

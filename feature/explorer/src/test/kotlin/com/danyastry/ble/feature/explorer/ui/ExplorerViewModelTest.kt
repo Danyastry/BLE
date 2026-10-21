@@ -3,11 +3,15 @@ package com.danyastry.ble.feature.explorer.ui
 import com.danyastry.ble.core.ble.gatt.connection.GattConnection
 import com.danyastry.ble.core.ble.gatt.model.CharacteristicProperty
 import com.danyastry.ble.core.ble.gatt.model.CharacteristicRef
+import com.danyastry.ble.core.ble.gatt.model.ConnectionParameters
+import com.danyastry.ble.core.ble.gatt.model.ConnectionPriority
 import com.danyastry.ble.core.ble.gatt.model.ConnectionState
 import com.danyastry.ble.core.ble.gatt.model.DescriptorRef
 import com.danyastry.ble.core.ble.gatt.model.GattCharacteristicInfo
 import com.danyastry.ble.core.ble.gatt.model.GattServiceInfo
 import com.danyastry.ble.core.ble.gatt.model.Notification
+import com.danyastry.ble.core.ble.gatt.model.Phy
+import com.danyastry.ble.core.ble.gatt.model.PhyPair
 import com.danyastry.ble.core.ble.gatt.queue.GattException
 import com.danyastry.ble.core.ble.gatt.queue.GattRequest
 import com.danyastry.ble.core.ble.gatt.queue.OperationOutcome
@@ -230,6 +234,8 @@ class ExplorerViewModelTest {
         override val address = "AA:01"
         override val state = MutableStateFlow<ConnectionState>(ConnectionState.Connecting)
         override val mtu = MutableStateFlow(23)
+        override val phy = MutableStateFlow<PhyPair?>(null)
+        override val connectionParameters = MutableStateFlow<ConnectionParameters?>(null)
         override val notifications = MutableSharedFlow<Notification>()
         override val records = MutableSharedFlow<OperationRecord>(extraBufferCapacity = 16)
 
@@ -286,6 +292,12 @@ class ExplorerViewModelTest {
             record(GattRequest.ReadRssi)
             return -42
         }
+
+        override suspend fun readPhy() = PhyPair(Phy.LE_1M, Phy.LE_1M)
+
+        override suspend fun setPreferredPhy(phy: Phy) = PhyPair(phy, phy)
+
+        override suspend fun requestPriority(priority: ConnectionPriority) = Unit
 
         override fun close() {
             closed = true

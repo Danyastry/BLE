@@ -51,6 +51,23 @@ class GattOperations(
         }
     }
 
+    suspend fun executeWithoutAnswer(request: GattRequest) {
+        val queuedAt = clock()
+        mutex.withLock {
+            val startedAt = clock()
+            var outcome: OperationOutcome = OperationOutcome.Success
+            try {
+                if (!isConnected) throw GattException.Disconnected(request)
+                if (!runCatching { transport.start(request) }.getOrDefault(false)) throw GattException.NotStarted(request)
+            } catch (failure: GattException) {
+                outcome = failure.outcome
+                throw failure
+            } finally {
+                onRecord(OperationRecord(request, queuedAt, startedAt, clock(), outcome))
+            }
+        }
+    }
+
     fun onResponse(response: GattResponse) {
         val current = pending ?: return
         if (response.answers(current.request)) current.response.complete(response)

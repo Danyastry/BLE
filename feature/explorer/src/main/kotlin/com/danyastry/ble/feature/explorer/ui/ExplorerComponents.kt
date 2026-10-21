@@ -77,6 +77,9 @@ private fun requestText(request: GattRequest): String = when (request) {
         BleUuid.label(request.ref.characteristic.characteristic),
     )
     GattRequest.ReadRssi -> stringResource(R.string.request_rssi)
+    GattRequest.ReadPhy -> stringResource(R.string.request_read_phy)
+    is GattRequest.SetPreferredPhy -> stringResource(R.string.request_set_phy, request.phy.name)
+    is GattRequest.RequestPriority -> stringResource(R.string.request_priority, request.priority.name)
 }
 
 @Composable

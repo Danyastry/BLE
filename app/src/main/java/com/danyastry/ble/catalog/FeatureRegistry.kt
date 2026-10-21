@@ -1,6 +1,7 @@
 package com.danyastry.ble.catalog
 
 import com.danyastry.ble.core.ui.FeatureEntry
+import com.danyastry.ble.feature.connection.ConnectionFeature
 import com.danyastry.ble.feature.explorer.ExplorerFeature
 import com.danyastry.ble.feature.peripheral.PeripheralFeature
 import com.danyastry.ble.feature.scanner.ScannerFeature
@@ -12,5 +13,6 @@ object FeatureRegistry {
         ScannerFeature,
         ExplorerFeature,
         ThroughputFeature,
+        ConnectionFeature,
     )
 }
