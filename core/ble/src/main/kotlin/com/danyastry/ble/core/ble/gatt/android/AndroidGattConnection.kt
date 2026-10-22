@@ -45,6 +45,7 @@ class AndroidGattConnection(
     context: Context,
     override val address: String,
     private val clock: () -> Long = SystemClock::elapsedRealtime,
+    private val autoConnect: Boolean = false,
 ) : GattConnection {
 
     private val _state = MutableStateFlow<ConnectionState>(ConnectionState.Connecting)
@@ -64,6 +65,9 @@ class AndroidGattConnection(
 
     private val _records = MutableSharedFlow<OperationRecord>(extraBufferCapacity = 256)
     override val records: Flow<OperationRecord> = _records
+
+    private val _servicesChanged = MutableSharedFlow<Unit>(extraBufferCapacity = 8)
+    override val servicesChanged: Flow<Unit> = _servicesChanged
 
     private val operations = GattOperations(::start, clock, onRecord = { _records.tryEmit(it) })
 
@@ -103,6 +107,11 @@ class AndroidGattConnection(
 
     override suspend fun requestPriority(priority: ConnectionPriority) {
         operations.executeWithoutAnswer(GattRequest.RequestPriority(priority))
+    }
+
+    override fun refreshServiceCache(): Boolean {
+        val current = gatt ?: return false
+        return runCatching { current.javaClass.getMethod("refresh").invoke(current) as Boolean }.getOrDefault(false)
     }
 
     override fun close() {
@@ -227,6 +236,10 @@ class AndroidGattConnection(
             _notifications.tryEmit(Notification(characteristic.ref(), characteristic.value ?: ByteArray(0), clock()))
         }
 
+        override fun onServiceChanged(gatt: BluetoothGatt) {
+            _servicesChanged.tryEmit(Unit)
+        }
+
         override fun onReadRemoteRssi(gatt: BluetoothGatt, rssi: Int, status: Int) {
             operations.onResponse(GattResponse.RssiRead(status, rssi))
         }
@@ -254,7 +267,7 @@ class AndroidGattConnection(
     init {
         val adapter = context.applicationContext.getSystemService(BluetoothManager::class.java)?.adapter
         val device = adapter?.getRemoteDevice(address)
-        gatt = device?.connectGatt(context.applicationContext, false, callback, BluetoothDevice.TRANSPORT_LE)
+        gatt = device?.connectGatt(context.applicationContext, autoConnect, callback, BluetoothDevice.TRANSPORT_LE)
         if (gatt == null) disconnected(null)
     }
 
