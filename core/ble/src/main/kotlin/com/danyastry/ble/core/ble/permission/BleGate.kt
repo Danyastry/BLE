@@ -55,18 +55,18 @@ fun BleGate(
     val state = GateState.resolve(sdk, roles, BluetoothStatus.hasBluetoothLe(context), granted, radio.isBluetoothOn, radio.isLocationOn)
     when (state) {
         GateState.Ready -> content()
-        GateState.NoBluetoothLe -> GateMessage(stringResource(R.string.gate_no_ble), modifier)
-        is GateState.MissingPermissions -> GateMessage(stringResource(R.string.gate_permissions), modifier, stringResource(R.string.gate_grant)) {
+        GateState.NoBluetoothLe -> GateMessage(stringResource(R.string.ble_gate_no_ble), modifier)
+        is GateState.MissingPermissions -> GateMessage(stringResource(R.string.ble_gate_permissions), modifier, stringResource(R.string.ble_gate_grant)) {
             permissionLauncher.launch(state.permissions.toTypedArray())
         }
-        GateState.BluetoothOff -> GateMessage(stringResource(R.string.gate_bluetooth_off), modifier, stringResource(R.string.gate_turn_on)) {
+        GateState.BluetoothOff -> GateMessage(stringResource(R.string.ble_gate_bluetooth_off), modifier, stringResource(R.string.ble_gate_turn_on)) {
             if (BlePermissions.canAskToEnableBluetooth(sdk, granted)) {
                 enableLauncher.launch(Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE))
             } else {
                 context.startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
             }
         }
-        GateState.LocationOff -> GateMessage(stringResource(R.string.gate_location_off), modifier, stringResource(R.string.gate_open_settings)) {
+        GateState.LocationOff -> GateMessage(stringResource(R.string.ble_gate_location_off), modifier, stringResource(R.string.ble_gate_open_settings)) {
             context.startActivity(Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS))
         }
     }

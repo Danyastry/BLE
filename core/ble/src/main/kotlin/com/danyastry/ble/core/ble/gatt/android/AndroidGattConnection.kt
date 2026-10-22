@@ -72,8 +72,8 @@ class AndroidGattConnection(
 
     override suspend fun requestMtu(mtu: Int): Int = (operations.execute(GattRequest.RequestMtu(mtu)) as GattResponse.MtuChanged).mtu
 
-    override suspend fun read(ref: CharacteristicRef): ByteArray =
-        (operations.execute(GattRequest.ReadCharacteristic(ref)) as GattResponse.CharacteristicRead).value
+    override suspend fun read(ref: CharacteristicRef, timeoutMillis: Long): ByteArray =
+        (operations.execute(GattRequest.ReadCharacteristic(ref), timeoutMillis) as GattResponse.CharacteristicRead).value
 
     override suspend fun write(ref: CharacteristicRef, value: ByteArray, withResponse: Boolean) {
         operations.execute(GattRequest.WriteCharacteristic(ref, value, withResponse))

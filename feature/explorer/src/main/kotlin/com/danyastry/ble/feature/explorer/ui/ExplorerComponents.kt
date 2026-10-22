@@ -57,36 +57,36 @@ internal fun recordText(record: OperationRecord): String =
 
 @Composable
 private fun requestText(request: GattRequest): String = when (request) {
-    GattRequest.DiscoverServices -> stringResource(R.string.request_discover)
-    is GattRequest.RequestMtu -> stringResource(R.string.request_mtu, request.mtu)
-    is GattRequest.ReadCharacteristic -> stringResource(R.string.request_read, BleUuid.label(request.ref.characteristic))
+    GattRequest.DiscoverServices -> stringResource(R.string.explorer_request_discover)
+    is GattRequest.RequestMtu -> stringResource(R.string.explorer_request_mtu, request.mtu)
+    is GattRequest.ReadCharacteristic -> stringResource(R.string.explorer_request_read, BleUuid.label(request.ref.characteristic))
     is GattRequest.WriteCharacteristic -> pluralStringResource(
-        if (request.withResponse) R.plurals.request_write else R.plurals.request_write_no_response,
+        if (request.withResponse) R.plurals.explorer_request_write else R.plurals.explorer_request_write_no_response,
         request.value.size,
         request.value.size,
         BleUuid.label(request.ref.characteristic),
     )
     is GattRequest.ReadDescriptor -> stringResource(
-        R.string.request_read_descriptor,
+        R.string.explorer_request_read_descriptor,
         BleUuid.label(request.ref.descriptor),
         BleUuid.label(request.ref.characteristic.characteristic),
     )
     is GattRequest.WriteDescriptor -> stringResource(
-        R.string.request_write_descriptor,
+        R.string.explorer_request_write_descriptor,
         BleUuid.label(request.ref.descriptor),
         BleUuid.label(request.ref.characteristic.characteristic),
     )
-    GattRequest.ReadRssi -> stringResource(R.string.request_rssi)
-    GattRequest.ReadPhy -> stringResource(R.string.request_read_phy)
-    is GattRequest.SetPreferredPhy -> stringResource(R.string.request_set_phy, request.phy.name)
-    is GattRequest.RequestPriority -> stringResource(R.string.request_priority, request.priority.name)
+    GattRequest.ReadRssi -> stringResource(R.string.explorer_request_rssi)
+    GattRequest.ReadPhy -> stringResource(R.string.explorer_request_read_phy)
+    is GattRequest.SetPreferredPhy -> stringResource(R.string.explorer_request_set_phy, request.phy.name)
+    is GattRequest.RequestPriority -> stringResource(R.string.explorer_request_priority, request.priority.name)
 }
 
 @Composable
 private fun outcomeText(outcome: OperationOutcome): String = when (outcome) {
-    OperationOutcome.Success -> stringResource(R.string.outcome_success)
-    is OperationOutcome.Failed -> stringResource(R.string.outcome_failed, GattStatus.label(outcome.status))
-    OperationOutcome.TimedOut -> stringResource(R.string.outcome_timed_out)
-    OperationOutcome.Disconnected -> stringResource(R.string.outcome_disconnected)
-    OperationOutcome.NotStarted -> stringResource(R.string.outcome_not_started)
+    OperationOutcome.Success -> stringResource(R.string.explorer_outcome_success)
+    is OperationOutcome.Failed -> stringResource(R.string.explorer_outcome_failed, GattStatus.label(outcome.status))
+    OperationOutcome.TimedOut -> stringResource(R.string.explorer_outcome_timed_out)
+    OperationOutcome.Disconnected -> stringResource(R.string.explorer_outcome_disconnected)
+    OperationOutcome.NotStarted -> stringResource(R.string.explorer_outcome_not_started)
 }

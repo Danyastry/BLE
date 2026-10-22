@@ -119,37 +119,37 @@ private fun CentralRow(central: Central) {
 @Composable
 private fun failureText(failure: AdvertiseFailure?): String = stringResource(
     when (failure) {
-        AdvertiseFailure.DATA_TOO_LARGE -> R.string.failure_data_too_large
-        AdvertiseFailure.TOO_MANY_ADVERTISERS -> R.string.failure_too_many_advertisers
-        AdvertiseFailure.ALREADY_STARTED -> R.string.failure_already_started
-        AdvertiseFailure.FEATURE_UNSUPPORTED -> R.string.failure_feature_unsupported
-        AdvertiseFailure.NO_GATT_SERVER -> R.string.failure_no_gatt_server
-        AdvertiseFailure.INTERNAL_ERROR, null -> R.string.failure_internal_error
+        AdvertiseFailure.DATA_TOO_LARGE -> R.string.peripheral_failure_data_too_large
+        AdvertiseFailure.TOO_MANY_ADVERTISERS -> R.string.peripheral_failure_too_many_advertisers
+        AdvertiseFailure.ALREADY_STARTED -> R.string.peripheral_failure_already_started
+        AdvertiseFailure.FEATURE_UNSUPPORTED -> R.string.peripheral_failure_feature_unsupported
+        AdvertiseFailure.NO_GATT_SERVER -> R.string.peripheral_failure_no_gatt_server
+        AdvertiseFailure.INTERNAL_ERROR, null -> R.string.peripheral_failure_internal_error
     },
 )
 
 @Composable
 private fun characteristicName(characteristic: SensorCharacteristic): String = stringResource(
     when (characteristic) {
-        SensorCharacteristic.TEMPERATURE -> R.string.characteristic_temperature
-        SensorCharacteristic.HUMIDITY -> R.string.characteristic_humidity
-        SensorCharacteristic.BATTERY_LEVEL -> R.string.characteristic_battery
-        SensorCharacteristic.MESSAGE -> R.string.characteristic_message
+        SensorCharacteristic.TEMPERATURE -> R.string.peripheral_characteristic_temperature
+        SensorCharacteristic.HUMIDITY -> R.string.peripheral_characteristic_humidity
+        SensorCharacteristic.BATTERY_LEVEL -> R.string.peripheral_characteristic_battery
+        SensorCharacteristic.MESSAGE -> R.string.peripheral_characteristic_message
     },
 )
 
 @Composable
 private fun eventText(event: PeripheralEvent): String = when (event) {
-    PeripheralEvent.AdvertisingStarted -> stringResource(R.string.event_advertising_started)
-    is PeripheralEvent.AdvertisingFailed -> stringResource(R.string.event_advertising_failed)
-    PeripheralEvent.Stopped -> stringResource(R.string.event_stopped)
-    is PeripheralEvent.Connected -> stringResource(R.string.event_connected, event.address)
-    is PeripheralEvent.Disconnected -> stringResource(R.string.event_disconnected, event.address)
-    is PeripheralEvent.MtuChanged -> stringResource(R.string.event_mtu, event.address, event.mtu)
-    is PeripheralEvent.Subscribed -> stringResource(R.string.event_subscribed, event.address, characteristicName(event.characteristic))
-    is PeripheralEvent.Unsubscribed -> stringResource(R.string.event_unsubscribed, event.address, characteristicName(event.characteristic))
-    is PeripheralEvent.Read -> stringResource(R.string.event_read, event.address, characteristicName(event.characteristic))
-    is PeripheralEvent.MessageWritten -> stringResource(R.string.event_written, event.address, event.text)
+    PeripheralEvent.AdvertisingStarted -> stringResource(R.string.peripheral_event_advertising_started)
+    is PeripheralEvent.AdvertisingFailed -> stringResource(R.string.peripheral_event_advertising_failed)
+    PeripheralEvent.Stopped -> stringResource(R.string.peripheral_event_stopped)
+    is PeripheralEvent.Connected -> stringResource(R.string.peripheral_event_connected, event.address)
+    is PeripheralEvent.Disconnected -> stringResource(R.string.peripheral_event_disconnected, event.address)
+    is PeripheralEvent.MtuChanged -> stringResource(R.string.peripheral_event_mtu, event.address, event.mtu)
+    is PeripheralEvent.Subscribed -> stringResource(R.string.peripheral_event_subscribed, event.address, characteristicName(event.characteristic))
+    is PeripheralEvent.Unsubscribed -> stringResource(R.string.peripheral_event_unsubscribed, event.address, characteristicName(event.characteristic))
+    is PeripheralEvent.Read -> stringResource(R.string.peripheral_event_read, event.address, characteristicName(event.characteristic))
+    is PeripheralEvent.MessageWritten -> stringResource(R.string.peripheral_event_written, event.address, event.text)
 }
 
 @Composable

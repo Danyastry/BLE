@@ -73,23 +73,23 @@ fun TuningRoute(modifier: Modifier = Modifier) {
 @Composable
 fun TuningScreen(state: TuningUiState, actions: TuningActions, modifier: Modifier = Modifier) {
     LazyColumn(modifier = modifier, contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        item { Hint(stringResource(R.string.tuning_intro)) }
+        item { Hint(stringResource(R.string.connection_tuning_intro)) }
         item { CapabilitiesCard(state.capabilities) }
         if (state.phase == TuningPhase.PICKING) {
             item {
                 if (state.isScanning) {
-                    OutlinedButton(onClick = actions.onStopScan, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.tuning_stop_scan)) }
+                    OutlinedButton(onClick = actions.onStopScan, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.connection_tuning_stop_scan)) }
                 } else {
-                    Button(onClick = actions.onStartScan, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.tuning_scan)) }
+                    Button(onClick = actions.onStartScan, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.connection_tuning_scan)) }
                 }
             }
-            if (state.waitSeconds > 0) item { Warning(pluralStringResource(R.plurals.tuning_wait, state.waitSeconds, state.waitSeconds)) }
-            if (state.nearby.isEmpty()) item { Hint(stringResource(R.string.tuning_none)) }
+            if (state.waitSeconds > 0) item { Warning(pluralStringResource(R.plurals.connection_tuning_wait, state.waitSeconds, state.waitSeconds)) }
+            if (state.nearby.isEmpty()) item { Hint(stringResource(R.string.connection_tuning_none)) }
             items(state.nearby, key = { it.address }) { device ->
-                SectionCard(device.name ?: stringResource(R.string.tuning_unnamed)) {
+                SectionCard(device.name ?: stringResource(R.string.connection_tuning_unnamed)) {
                     Mono(device.address)
                     OutlinedButton(onClick = { actions.onConnect(device.address) }, modifier = Modifier.fillMaxWidth()) {
-                        Text(stringResource(R.string.tuning_connect))
+                        Text(stringResource(R.string.connection_tuning_connect))
                     }
                 }
             }
@@ -102,47 +102,47 @@ fun TuningScreen(state: TuningUiState, actions: TuningActions, modifier: Modifie
 
 @Composable
 private fun CapabilitiesCard(capabilities: ControllerCapabilities?) {
-    SectionCard(stringResource(R.string.tuning_controller)) {
+    SectionCard(stringResource(R.string.connection_tuning_controller)) {
         if (capabilities == null) {
-            Hint(stringResource(R.string.tuning_no_controller))
+            Hint(stringResource(R.string.connection_tuning_no_controller))
             return@SectionCard
         }
-        Mono(stringResource(R.string.tuning_cap_2m, yesNo(capabilities.le2MPhy)))
-        Mono(stringResource(R.string.tuning_cap_coded, yesNo(capabilities.leCodedPhy)))
-        Mono(stringResource(R.string.tuning_cap_extended, yesNo(capabilities.extendedAdvertising)))
-        Mono(stringResource(R.string.tuning_cap_periodic, yesNo(capabilities.periodicAdvertising)))
-        Mono(stringResource(R.string.tuning_cap_max_data, capabilities.maxAdvertisingDataBytes))
-        Mono(stringResource(R.string.tuning_cap_multiple, yesNo(capabilities.multipleAdvertisement)))
-        Mono(stringResource(R.string.tuning_cap_filtering, yesNo(capabilities.offloadedFiltering)))
-        Mono(stringResource(R.string.tuning_cap_batching, yesNo(capabilities.offloadedScanBatching)))
+        Mono(stringResource(R.string.connection_tuning_cap_2m, yesNo(capabilities.le2MPhy)))
+        Mono(stringResource(R.string.connection_tuning_cap_coded, yesNo(capabilities.leCodedPhy)))
+        Mono(stringResource(R.string.connection_tuning_cap_extended, yesNo(capabilities.extendedAdvertising)))
+        Mono(stringResource(R.string.connection_tuning_cap_periodic, yesNo(capabilities.periodicAdvertising)))
+        Mono(stringResource(R.string.connection_tuning_cap_max_data, capabilities.maxAdvertisingDataBytes))
+        Mono(stringResource(R.string.connection_tuning_cap_multiple, yesNo(capabilities.multipleAdvertisement)))
+        Mono(stringResource(R.string.connection_tuning_cap_filtering, yesNo(capabilities.offloadedFiltering)))
+        Mono(stringResource(R.string.connection_tuning_cap_batching, yesNo(capabilities.offloadedScanBatching)))
     }
 }
 
 @Composable
 private fun SessionCard(state: TuningUiState, actions: TuningActions) {
-    SectionCard(state.device?.name ?: stringResource(R.string.tuning_unnamed)) {
+    SectionCard(state.device?.name ?: stringResource(R.string.connection_tuning_unnamed)) {
         state.device?.let { Mono(it.address) }
         Text(
             when (state.phase) {
-                TuningPhase.PICKING, TuningPhase.CONNECTING -> stringResource(R.string.tuning_connecting)
-                TuningPhase.DISCONNECTED -> stringResource(R.string.tuning_disconnected)
-                TuningPhase.READY, TuningPhase.MEASURING -> stringResource(R.string.tuning_ready)
+                TuningPhase.PICKING, TuningPhase.CONNECTING -> stringResource(R.string.connection_tuning_connecting)
+                TuningPhase.DISCONNECTED -> stringResource(R.string.connection_tuning_disconnected)
+                TuningPhase.READY, TuningPhase.MEASURING -> stringResource(R.string.connection_tuning_ready)
             },
         )
-        state.phy?.let { Mono(stringResource(R.string.tuning_phy, phyLabel(it.tx), phyLabel(it.rx))) }
+        state.phy?.let { Mono(stringResource(R.string.connection_tuning_phy, phyLabel(it.tx), phyLabel(it.rx))) }
         if (state.isConnected) {
             val parameters = state.parameters
             if (parameters == null) {
-                Hint(stringResource(R.string.tuning_parameters_unknown))
+                Hint(stringResource(R.string.connection_tuning_parameters_unknown))
             } else {
                 Mono(parametersText(parameters))
-                Hint(stringResource(R.string.tuning_parameters_source))
+                Hint(stringResource(R.string.connection_tuning_parameters_source))
             }
         }
         if (state.isConnected) {
-            if (!state.hasProbeTarget) Warning(stringResource(R.string.tuning_no_target))
+            if (!state.hasProbeTarget) Warning(stringResource(R.string.connection_tuning_no_target))
             val idle = state.phase == TuningPhase.READY
-            Hint(stringResource(R.string.tuning_priority))
+            Hint(stringResource(R.string.connection_tuning_priority))
             SegmentedSelector(
                 options = ConnectionPriority.entries,
                 selected = state.priority,
@@ -151,7 +151,7 @@ private fun SessionCard(state: TuningUiState, actions: TuningActions) {
             )
             val phys = SweepPlan.phys(state.capabilities)
             if (phys.size > 1) {
-                Hint(stringResource(R.string.tuning_preferred_phy))
+                Hint(stringResource(R.string.connection_tuning_preferred_phy))
                 SegmentedSelector(
                     options = phys,
                     selected = state.phy?.tx ?: Phy.LE_1M,
@@ -160,39 +160,39 @@ private fun SessionCard(state: TuningUiState, actions: TuningActions) {
                 )
             }
             Button(onClick = actions.onMeasure, enabled = idle && state.hasProbeTarget, modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.tuning_measure))
+                Text(stringResource(R.string.connection_tuning_measure))
             }
             OutlinedButton(onClick = actions.onSweep, enabled = idle && state.hasProbeTarget, modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.tuning_sweep))
+                Text(stringResource(R.string.connection_tuning_sweep))
             }
-            state.step?.let { Text(stringResource(R.string.tuning_step, stringResource(R.string.tuning_result_title, priorityLabel(it.priority), phyLabel(it.phy)))) }
-            OutlinedButton(onClick = actions.onDisconnect, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.tuning_disconnect)) }
+            state.step?.let { Text(stringResource(R.string.connection_tuning_step, stringResource(R.string.connection_tuning_result_title, priorityLabel(it.priority), phyLabel(it.phy)))) }
+            OutlinedButton(onClick = actions.onDisconnect, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.connection_tuning_disconnect)) }
         }
-        state.failure?.let { Warning(stringResource(R.string.tuning_failed, outcomeText(it))) }
-        TextButton(onClick = actions.onBackToList) { Text(stringResource(R.string.tuning_back)) }
+        state.failure?.let { Warning(stringResource(R.string.connection_tuning_failed, outcomeText(it))) }
+        TextButton(onClick = actions.onBackToList) { Text(stringResource(R.string.connection_tuning_back)) }
     }
 }
 
 @Composable
 private fun ResultsCard(results: List<TuningResult>) {
-    SectionCard(stringResource(R.string.tuning_results)) {
-        Hint(stringResource(R.string.tuning_results_hint))
-        Hint(stringResource(R.string.tuning_emulator_note))
+    SectionCard(stringResource(R.string.connection_tuning_results)) {
+        Hint(stringResource(R.string.connection_tuning_results_hint))
+        Hint(stringResource(R.string.connection_tuning_emulator_note))
         results.forEach { result ->
-            Text(stringResource(R.string.tuning_result_title, priorityLabel(result.priority), phyLabel(result.phy.tx)))
+            Text(stringResource(R.string.connection_tuning_result_title, priorityLabel(result.priority), phyLabel(result.phy.tx)))
             Mono(
                 stringResource(
-                    R.string.tuning_result_stats,
+                    R.string.connection_tuning_result_stats,
                     result.stats.averageMillis,
                     result.stats.medianMillis.toInt(),
                     result.stats.minMillis.toInt(),
                     result.stats.maxMillis.toInt(),
                 ),
             )
-            Hint(stringResource(R.string.tuning_result_documented, result.priority.minIntervalMillis, result.priority.maxIntervalMillis))
+            Hint(stringResource(R.string.connection_tuning_result_documented, result.priority.minIntervalMillis, result.priority.maxIntervalMillis))
             result.parameters?.let { parameters ->
                 val text = parametersText(parameters)
-                if (parameters.fits(result.priority)) Mono(stringResource(R.string.tuning_fits, text)) else Warning(stringResource(R.string.tuning_outside, text))
+                if (parameters.fits(result.priority)) Mono(stringResource(R.string.connection_tuning_fits, text)) else Warning(stringResource(R.string.connection_tuning_outside, text))
             }
         }
     }
@@ -200,7 +200,7 @@ private fun ResultsCard(results: List<TuningResult>) {
 
 @Composable
 private fun parametersText(parameters: ConnectionParameters): String =
-    stringResource(R.string.tuning_parameters, parameters.intervalMillis, parameters.peripheralLatency, parameters.supervisionTimeoutMillis)
+    stringResource(R.string.connection_tuning_parameters, parameters.intervalMillis, parameters.peripheralLatency, parameters.supervisionTimeoutMillis)
 
 @Preview(showBackground = true)
 @Composable

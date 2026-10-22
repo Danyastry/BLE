@@ -16,6 +16,7 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
 
         extensions.configure<LibraryExtension> {
             configureKotlinAndroid(this)
+            resourcePrefix = path.substringAfterLast(':') + "_"
             testOptions.targetSdk = BuildConfig.TARGET_SDK
             lint.targetSdk = BuildConfig.TARGET_SDK
         }

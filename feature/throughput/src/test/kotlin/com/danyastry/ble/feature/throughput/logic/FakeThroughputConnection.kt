@@ -49,7 +49,7 @@ class FakeThroughputConnection(
         return mtu
     }
 
-    override suspend fun read(ref: CharacteristicRef): ByteArray {
+    override suspend fun read(ref: CharacteristicRef, timeoutMillis: Long): ByteArray {
         delay(roundTripMillis)
         return ThroughputProtocol.encode(received)
     }

@@ -24,7 +24,7 @@ class GattOperations(
     @Volatile
     private var isConnected = true
 
-    suspend fun execute(request: GattRequest): GattResponse {
+    suspend fun execute(request: GattRequest, timeoutMillis: Long = this.timeoutMillis): GattResponse {
         val queuedAt = clock()
         return mutex.withLock {
             val startedAt = clock()

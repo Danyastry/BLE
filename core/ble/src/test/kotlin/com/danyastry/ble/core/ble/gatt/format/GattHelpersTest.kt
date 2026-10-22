@@ -67,6 +67,7 @@ class GattHelpersTest {
     fun `status codes are shown with their names`() {
         assertThat(GattStatus.label(0)).isEqualTo("0 SUCCESS")
         assertThat(GattStatus.label(133)).isEqualTo("133 GATT_ERROR")
+        assertThat(GattStatus.label(137)).isEqualTo("137 AUTH_FAIL")
         assertThat(GattStatus.label(0x0F)).isEqualTo("15 INSUFFICIENT_ENCRYPTION")
         assertThat(GattStatus.label(200)).isEqualTo("200 UNKNOWN")
     }

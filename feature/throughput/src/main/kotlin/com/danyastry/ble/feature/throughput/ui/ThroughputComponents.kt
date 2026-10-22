@@ -44,9 +44,9 @@ internal fun Mono(text: String) {
 
 @Composable
 internal fun outcomeText(outcome: OperationOutcome): String = when (outcome) {
-    OperationOutcome.Success -> stringResource(R.string.outcome_success)
-    is OperationOutcome.Failed -> stringResource(R.string.outcome_failed, GattStatus.label(outcome.status))
-    OperationOutcome.TimedOut -> stringResource(R.string.outcome_timed_out)
-    OperationOutcome.Disconnected -> stringResource(R.string.outcome_disconnected)
-    OperationOutcome.NotStarted -> stringResource(R.string.outcome_not_started)
+    OperationOutcome.Success -> stringResource(R.string.throughput_outcome_success)
+    is OperationOutcome.Failed -> stringResource(R.string.throughput_outcome_failed, GattStatus.label(outcome.status))
+    OperationOutcome.TimedOut -> stringResource(R.string.throughput_outcome_timed_out)
+    OperationOutcome.Disconnected -> stringResource(R.string.throughput_outcome_disconnected)
+    OperationOutcome.NotStarted -> stringResource(R.string.throughput_outcome_not_started)
 }

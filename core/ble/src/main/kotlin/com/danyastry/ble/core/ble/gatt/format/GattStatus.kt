@@ -19,6 +19,7 @@ object GattStatus {
         0x16 to "LOCAL_HOST_TERMINATED",
         0x3E to "CONNECTION_FAILED_TO_ESTABLISH",
         0x85 to "GATT_ERROR",
+        0x89 to "AUTH_FAIL",
         0x101 to "FAILURE",
     )
 

@@ -186,28 +186,28 @@ fun DeviceDetails(device: DeviceEntry, onBack: () -> Unit, modifier: Modifier = 
         verticalArrangement = Arrangement.spacedBy(12.dp),
     ) {
         item {
-            OutlinedButton(onClick = onBack, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.details_back)) }
+            OutlinedButton(onClick = onBack, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.scanner_details_back)) }
         }
         item {
             Column(verticalArrangement = Arrangement.spacedBy(4.dp)) {
                 Text(device.name ?: stringResource(R.string.scanner_unnamed), style = MaterialTheme.typography.titleMedium)
-                Hint(pluralStringResource(R.plurals.details_summary, device.count, device.address, device.count))
+                Hint(pluralStringResource(R.plurals.scanner_details_summary, device.count, device.address, device.count))
                 Hint(stringResource(R.string.scanner_rssi, device.rssi))
             }
         }
         item {
-            SectionCard(stringResource(R.string.details_packet)) {
+            SectionCard(stringResource(R.string.scanner_details_packet)) {
                 Mono(device.bytes.trimPadding().toHex())
             }
         }
-        device.advertisement.malformedAt?.let { offset -> item { Warning(stringResource(R.string.details_malformed, offset)) } }
+        device.advertisement.malformedAt?.let { offset -> item { Warning(stringResource(R.string.scanner_details_malformed, offset)) } }
         items(device.advertisement.structures) { structure -> StructureCard(structure) }
     }
 }
 
 @Composable
 private fun StructureCard(structure: AdStructure) {
-    SectionCard(stringResource(R.string.details_structure_title, structureName(structure.field), structure.type, structure.offset)) {
+    SectionCard(stringResource(R.string.scanner_details_structure_title, structureName(structure.field), structure.type, structure.offset)) {
         Mono(structure.raw.toHex())
         fieldLines(structure.field).forEach { Text(it, style = MaterialTheme.typography.bodyMedium) }
     }
@@ -215,18 +215,18 @@ private fun StructureCard(structure: AdStructure) {
 
 @Composable
 private fun structureName(field: AdField): String = when (field) {
-    is AdField.Flags -> stringResource(R.string.ad_flags)
+    is AdField.Flags -> stringResource(R.string.scanner_ad_flags)
     is AdField.ServiceUuids -> stringResource(
-        R.string.ad_uuids,
+        R.string.scanner_ad_uuids,
         field.bits,
-        stringResource(if (field.isComplete) R.string.ad_complete else R.string.ad_incomplete),
+        stringResource(if (field.isComplete) R.string.scanner_ad_complete else R.string.scanner_ad_incomplete),
     )
-    is AdField.LocalName -> stringResource(if (field.isComplete) R.string.ad_name_complete else R.string.ad_name_short)
-    is AdField.TxPower -> stringResource(R.string.ad_tx_power)
-    is AdField.ServiceData -> stringResource(R.string.ad_service_data)
-    is AdField.Appearance -> stringResource(R.string.ad_appearance)
-    is AdField.ManufacturerData -> stringResource(R.string.ad_manufacturer)
-    is AdField.Unknown -> stringResource(R.string.ad_unknown)
+    is AdField.LocalName -> stringResource(if (field.isComplete) R.string.scanner_ad_name_complete else R.string.scanner_ad_name_short)
+    is AdField.TxPower -> stringResource(R.string.scanner_ad_tx_power)
+    is AdField.ServiceData -> stringResource(R.string.scanner_ad_service_data)
+    is AdField.Appearance -> stringResource(R.string.scanner_ad_appearance)
+    is AdField.ManufacturerData -> stringResource(R.string.scanner_ad_manufacturer)
+    is AdField.Unknown -> stringResource(R.string.scanner_ad_unknown)
 }
 
 @Composable
@@ -234,11 +234,11 @@ private fun fieldLines(field: AdField): List<String> = when (field) {
     is AdField.Flags -> field.flags.map { flagLabel(it) }
     is AdField.ServiceUuids -> field.uuids.map { serviceLabel(it) }
     is AdField.LocalName -> listOf(field.name)
-    is AdField.TxPower -> listOf(stringResource(R.string.ad_dbm, field.dbm))
-    is AdField.ServiceData -> listOf(stringResource(R.string.ad_service_data_value, serviceLabel(field.uuid), field.data.toHex()))
-    is AdField.Appearance -> listOf(stringResource(R.string.ad_appearance_value, field.value))
+    is AdField.TxPower -> listOf(stringResource(R.string.scanner_ad_dbm, field.dbm))
+    is AdField.ServiceData -> listOf(stringResource(R.string.scanner_ad_service_data_value, serviceLabel(field.uuid), field.data.toHex()))
+    is AdField.Appearance -> listOf(stringResource(R.string.scanner_ad_appearance_value, field.value))
     is AdField.ManufacturerData -> listOf(
-        stringResource(R.string.ad_company, field.companyId, AssignedNumbers.companyName(field.companyId).orEmpty(), field.data.toHex()),
+        stringResource(R.string.scanner_ad_company, field.companyId, AssignedNumbers.companyName(field.companyId).orEmpty(), field.data.toHex()),
     )
     is AdField.Unknown -> emptyList()
 }
@@ -246,11 +246,11 @@ private fun fieldLines(field: AdField): List<String> = when (field) {
 @Composable
 private fun flagLabel(flag: AdFlag): String = stringResource(
     when (flag) {
-        AdFlag.LE_LIMITED_DISCOVERABLE -> R.string.flag_le_limited
-        AdFlag.LE_GENERAL_DISCOVERABLE -> R.string.flag_le_general
-        AdFlag.BR_EDR_NOT_SUPPORTED -> R.string.flag_no_br_edr
-        AdFlag.LE_AND_BR_EDR_CONTROLLER -> R.string.flag_controller
-        AdFlag.LE_AND_BR_EDR_HOST -> R.string.flag_host
+        AdFlag.LE_LIMITED_DISCOVERABLE -> R.string.scanner_flag_le_limited
+        AdFlag.LE_GENERAL_DISCOVERABLE -> R.string.scanner_flag_le_general
+        AdFlag.BR_EDR_NOT_SUPPORTED -> R.string.scanner_flag_no_br_edr
+        AdFlag.LE_AND_BR_EDR_CONTROLLER -> R.string.scanner_flag_controller
+        AdFlag.LE_AND_BR_EDR_HOST -> R.string.scanner_flag_host
     },
 )
 
@@ -279,12 +279,12 @@ private fun sortLabel(sort: SortOrder): String = stringResource(
 @Composable
 private fun failureText(failure: ScanFailure): String = stringResource(
     when (failure) {
-        ScanFailure.ALREADY_STARTED -> R.string.failure_already_started
-        ScanFailure.REGISTRATION_FAILED -> R.string.failure_registration_failed
-        ScanFailure.INTERNAL_ERROR -> R.string.failure_internal_error
-        ScanFailure.FEATURE_UNSUPPORTED -> R.string.failure_feature_unsupported
-        ScanFailure.OUT_OF_HARDWARE_RESOURCES -> R.string.failure_out_of_hardware_resources
-        ScanFailure.SCANNING_TOO_FREQUENTLY -> R.string.failure_scanning_too_frequently
+        ScanFailure.ALREADY_STARTED -> R.string.scanner_failure_already_started
+        ScanFailure.REGISTRATION_FAILED -> R.string.scanner_failure_registration_failed
+        ScanFailure.INTERNAL_ERROR -> R.string.scanner_failure_internal_error
+        ScanFailure.FEATURE_UNSUPPORTED -> R.string.scanner_failure_feature_unsupported
+        ScanFailure.OUT_OF_HARDWARE_RESOURCES -> R.string.scanner_failure_out_of_hardware_resources
+        ScanFailure.SCANNING_TOO_FREQUENTLY -> R.string.scanner_failure_scanning_too_frequently
     },
 )
 

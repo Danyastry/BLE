@@ -31,6 +31,7 @@ dependencies {
     implementation(projects.feature.explorer)
     implementation(projects.feature.throughput)
     implementation(projects.feature.connection)
+    implementation(projects.feature.bonding)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.activity.compose)
