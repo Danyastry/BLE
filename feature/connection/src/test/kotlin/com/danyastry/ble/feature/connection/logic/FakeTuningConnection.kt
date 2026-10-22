@@ -39,7 +39,7 @@ class FakeTuningConnection(private val supported: Set<Phy> = setOf(Phy.LE_1M, Ph
 
     override suspend fun requestMtu(mtu: Int): Int = mtu
 
-    override suspend fun read(ref: CharacteristicRef): ByteArray {
+    override suspend fun read(ref: CharacteristicRef, timeoutMillis: Long): ByteArray {
         reads += ref
         delay(priority.maxIntervalMillis.toLong() * 2)
         return byteArrayOf(1)

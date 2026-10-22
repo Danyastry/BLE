@@ -45,31 +45,31 @@ internal fun Mono(text: String) {
 }
 
 @Composable
-internal fun yesNo(value: Boolean): String = stringResource(if (value) R.string.tuning_yes else R.string.tuning_no)
+internal fun yesNo(value: Boolean): String = stringResource(if (value) R.string.connection_tuning_yes else R.string.connection_tuning_no)
 
 @Composable
 internal fun priorityLabel(priority: ConnectionPriority): String = stringResource(
     when (priority) {
-        ConnectionPriority.LOW_POWER -> R.string.priority_low_power
-        ConnectionPriority.BALANCED -> R.string.priority_balanced
-        ConnectionPriority.HIGH -> R.string.priority_high
+        ConnectionPriority.LOW_POWER -> R.string.connection_priority_low_power
+        ConnectionPriority.BALANCED -> R.string.connection_priority_balanced
+        ConnectionPriority.HIGH -> R.string.connection_priority_high
     },
 )
 
 @Composable
 internal fun phyLabel(phy: Phy): String = stringResource(
     when (phy) {
-        Phy.LE_1M -> R.string.phy_1m
-        Phy.LE_2M -> R.string.phy_2m
-        Phy.LE_CODED -> R.string.phy_coded
+        Phy.LE_1M -> R.string.connection_phy_1m
+        Phy.LE_2M -> R.string.connection_phy_2m
+        Phy.LE_CODED -> R.string.connection_phy_coded
     },
 )
 
 @Composable
 internal fun outcomeText(outcome: OperationOutcome): String = when (outcome) {
-    OperationOutcome.Success -> stringResource(R.string.outcome_success)
-    is OperationOutcome.Failed -> stringResource(R.string.outcome_failed, GattStatus.label(outcome.status))
-    OperationOutcome.TimedOut -> stringResource(R.string.outcome_timed_out)
-    OperationOutcome.Disconnected -> stringResource(R.string.outcome_disconnected)
-    OperationOutcome.NotStarted -> stringResource(R.string.outcome_not_started)
+    OperationOutcome.Success -> stringResource(R.string.connection_outcome_success)
+    is OperationOutcome.Failed -> stringResource(R.string.connection_outcome_failed, GattStatus.label(outcome.status))
+    OperationOutcome.TimedOut -> stringResource(R.string.connection_outcome_timed_out)
+    OperationOutcome.Disconnected -> stringResource(R.string.connection_outcome_disconnected)
+    OperationOutcome.NotStarted -> stringResource(R.string.connection_outcome_not_started)
 }

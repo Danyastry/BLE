@@ -1,9 +1,9 @@
 <resources>
-    <string name="gate_no_ble">This device has no Bluetooth Low Energy</string>
-    <string name="gate_permissions">Bluetooth permission is needed for this screen</string>
-    <string name="gate_grant">Allow</string>
-    <string name="gate_bluetooth_off">Bluetooth is off</string>
-    <string name="gate_turn_on">Turn on</string>
-    <string name="gate_location_off">Before Android 12, scanning returns nothing while location is off</string>
-    <string name="gate_open_settings">Open settings</string>
+    <string name="ble_gate_no_ble">This device has no Bluetooth Low Energy</string>
+    <string name="ble_gate_permissions">Bluetooth permission is needed for this screen</string>
+    <string name="ble_gate_grant">Allow</string>
+    <string name="ble_gate_bluetooth_off">Bluetooth is off</string>
+    <string name="ble_gate_turn_on">Turn on</string>
+    <string name="ble_gate_location_off">Before Android 12, scanning returns nothing while location is off</string>
+    <string name="ble_gate_open_settings">Open settings</string>
 </resources>

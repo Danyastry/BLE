@@ -263,7 +263,7 @@ class ExplorerViewModelTest {
             return mtu
         }
 
-        override suspend fun read(ref: CharacteristicRef): ByteArray {
+        override suspend fun read(ref: CharacteristicRef, timeoutMillis: Long): ByteArray {
             val request = GattRequest.ReadCharacteristic(ref)
             failNextRead?.let { status ->
                 failNextRead = null

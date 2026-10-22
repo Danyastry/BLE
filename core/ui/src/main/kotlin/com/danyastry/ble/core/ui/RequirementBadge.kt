@@ -22,7 +22,7 @@ fun RequirementBadge(minSdk: Int, isSupported: Boolean, modifier: Modifier = Mod
     ) {
         Text(
             text = stringResource(
-                if (isSupported) R.string.requirement_android else R.string.requirement_needs_android,
+                if (isSupported) R.string.ui_requirement_android else R.string.ui_requirement_needs_android,
                 AndroidVersion.nameOf(minSdk),
             ),
             style = MaterialTheme.typography.labelSmall,

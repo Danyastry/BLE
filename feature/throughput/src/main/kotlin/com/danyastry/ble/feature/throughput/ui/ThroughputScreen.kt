@@ -74,35 +74,35 @@ fun ThroughputScreen(state: ThroughputUiState, actions: ThroughputActions, modif
             SegmentedSelector(
                 options = ThroughputRole.entries,
                 selected = state.role,
-                label = { stringResource(if (it == ThroughputRole.SERVE) R.string.role_serve else R.string.role_measure) },
+                label = { stringResource(if (it == ThroughputRole.SERVE) R.string.throughput_role_serve else R.string.throughput_role_measure) },
                 onSelect = actions.onRoleChange,
             )
         }
         when (state.role) {
             ThroughputRole.SERVE -> item { ServeContent(state, actions) }
             ThroughputRole.MEASURE -> if (state.phase == MeasurePhase.PICKING) {
-                item { Hint(stringResource(R.string.measure_intro)) }
+                item { Hint(stringResource(R.string.throughput_measure_intro)) }
                 item {
                     if (state.isScanning) {
-                        OutlinedButton(onClick = actions.onStopScan, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.measure_stop_scan)) }
+                        OutlinedButton(onClick = actions.onStopScan, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.throughput_measure_stop_scan)) }
                     } else {
-                        Button(onClick = actions.onStartScan, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.measure_scan)) }
+                        Button(onClick = actions.onStartScan, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.throughput_measure_scan)) }
                     }
                 }
-                if (state.waitSeconds > 0) item { Warning(pluralStringResource(R.plurals.measure_wait, state.waitSeconds, state.waitSeconds)) }
-                if (state.nearby.isEmpty()) item { Hint(stringResource(R.string.measure_none)) }
+                if (state.waitSeconds > 0) item { Warning(pluralStringResource(R.plurals.throughput_measure_wait, state.waitSeconds, state.waitSeconds)) }
+                if (state.nearby.isEmpty()) item { Hint(stringResource(R.string.throughput_measure_none)) }
                 items(state.nearby, key = { it.address }) { device ->
-                    SectionCard(device.name ?: stringResource(R.string.measure_unnamed)) {
+                    SectionCard(device.name ?: stringResource(R.string.throughput_measure_unnamed)) {
                         Mono(device.address)
                         OutlinedButton(onClick = { actions.onConnect(device.address) }, modifier = Modifier.fillMaxWidth()) {
-                            Text(stringResource(R.string.measure_connect))
+                            Text(stringResource(R.string.throughput_measure_connect))
                         }
                     }
                 }
             } else {
                 item { SessionCard(state, actions) }
                 items(TestKind.entries) { kind -> ResultCard(kind, state.results.filter { it.kind == kind }) }
-                item { Hint(stringResource(R.string.measure_emulator_note)) }
+                item { Hint(stringResource(R.string.throughput_measure_emulator_note)) }
             }
         }
     }
@@ -112,55 +112,55 @@ fun ThroughputScreen(state: ThroughputUiState, actions: ThroughputActions, modif
 private fun ServeContent(state: ThroughputUiState, actions: ThroughputActions) {
     val server = state.server
     SectionCard(serverStatus(state)) {
-        Hint(stringResource(R.string.serve_intro))
+        Hint(stringResource(R.string.throughput_serve_intro))
         val client = server.client
-        Text(if (client != null) stringResource(R.string.serve_client, client, server.mtu) else stringResource(R.string.serve_no_client))
-        Mono(stringResource(R.string.serve_received, server.receivedBytes.toInt(), server.receivedPackets))
-        Mono(stringResource(R.string.serve_streamed, server.streamedBytes))
+        Text(if (client != null) stringResource(R.string.throughput_serve_client, client, server.mtu) else stringResource(R.string.throughput_serve_no_client))
+        Mono(stringResource(R.string.throughput_serve_received, server.receivedBytes.toInt(), server.receivedPackets))
+        Mono(stringResource(R.string.throughput_serve_streamed, server.streamedBytes))
         if (server.status == ServerStatus.STARTING || server.status == ServerStatus.ADVERTISING) {
-            OutlinedButton(onClick = actions.onStopServer, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.serve_stop)) }
+            OutlinedButton(onClick = actions.onStopServer, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.throughput_serve_stop)) }
         } else {
-            Button(onClick = actions.onStartServer, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.serve_start)) }
+            Button(onClick = actions.onStartServer, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.throughput_serve_start)) }
         }
     }
 }
 
 @Composable
 private fun serverStatus(state: ThroughputUiState): String = when (state.server.status) {
-    ServerStatus.STOPPED -> stringResource(R.string.serve_stopped)
-    ServerStatus.STARTING -> stringResource(R.string.serve_starting)
-    ServerStatus.ADVERTISING -> state.deviceName?.let { stringResource(R.string.serve_advertising, it) } ?: stringResource(R.string.serve_advertising_unnamed)
-    ServerStatus.FAILED -> stringResource(R.string.serve_failed)
+    ServerStatus.STOPPED -> stringResource(R.string.throughput_serve_stopped)
+    ServerStatus.STARTING -> stringResource(R.string.throughput_serve_starting)
+    ServerStatus.ADVERTISING -> state.deviceName?.let { stringResource(R.string.throughput_serve_advertising, it) } ?: stringResource(R.string.throughput_serve_advertising_unnamed)
+    ServerStatus.FAILED -> stringResource(R.string.throughput_serve_failed)
 }
 
 @Composable
 private fun SessionCard(state: ThroughputUiState, actions: ThroughputActions) {
-    SectionCard(state.device?.name ?: stringResource(R.string.measure_unnamed)) {
+    SectionCard(state.device?.name ?: stringResource(R.string.throughput_measure_unnamed)) {
         state.device?.let { Mono(it.address) }
         Text(
             when (state.phase) {
-                MeasurePhase.CONNECTING, MeasurePhase.PICKING -> stringResource(R.string.measure_connecting)
-                MeasurePhase.DISCONNECTED -> stringResource(R.string.measure_disconnected)
-                else -> stringResource(R.string.measure_ready, state.mtu)
+                MeasurePhase.CONNECTING, MeasurePhase.PICKING -> stringResource(R.string.throughput_measure_connecting)
+                MeasurePhase.DISCONNECTED -> stringResource(R.string.throughput_measure_disconnected)
+                else -> stringResource(R.string.throughput_measure_ready, state.mtu)
             },
         )
         if (state.isConnected) {
-            Hint(stringResource(R.string.measure_size, state.sizeKilobytes))
+            Hint(stringResource(R.string.throughput_measure_size, state.sizeKilobytes))
             SegmentedSelector(
                 options = ThroughputViewModel.SIZES_KILOBYTES,
                 selected = state.sizeKilobytes,
-                label = { stringResource(R.string.measure_kilobytes, it) },
+                label = { stringResource(R.string.throughput_measure_kilobytes, it) },
                 onSelect = actions.onSizeChange,
             )
             Button(onClick = actions.onRun, enabled = state.phase != MeasurePhase.RUNNING, modifier = Modifier.fillMaxWidth()) {
-                Text(stringResource(R.string.measure_run))
+                Text(stringResource(R.string.throughput_measure_run))
             }
-            state.running?.let { Text(stringResource(R.string.measure_running, kindTitle(it.kind), it.mtu)) }
-            if (state.phase == MeasurePhase.DONE && state.mtu > ServerState.DEFAULT_MTU) Hint(stringResource(R.string.measure_mtu_kept, state.mtu))
-            OutlinedButton(onClick = actions.onDisconnect, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.measure_disconnect)) }
+            state.running?.let { Text(stringResource(R.string.throughput_measure_running, kindTitle(it.kind), it.mtu)) }
+            if (state.phase == MeasurePhase.DONE && state.mtu > ServerState.DEFAULT_MTU) Hint(stringResource(R.string.throughput_measure_mtu_kept, state.mtu))
+            OutlinedButton(onClick = actions.onDisconnect, modifier = Modifier.fillMaxWidth()) { Text(stringResource(R.string.throughput_measure_disconnect)) }
         }
-        state.failure?.let { Warning(stringResource(R.string.measure_failed, outcomeText(it))) }
-        TextButton(onClick = actions.onBackToList) { Text(stringResource(R.string.measure_back)) }
+        state.failure?.let { Warning(stringResource(R.string.throughput_measure_failed, outcomeText(it))) }
+        TextButton(onClick = actions.onBackToList) { Text(stringResource(R.string.throughput_measure_back)) }
     }
 }
 
@@ -170,20 +170,20 @@ private fun ResultCard(kind: TestKind, results: List<Measurement>) {
         Hint(
             stringResource(
                 when (kind) {
-                    TestKind.WRITE_WITH_RESPONSE -> R.string.kind_write_with_response_hint
-                    TestKind.WRITE_WITHOUT_RESPONSE -> R.string.kind_write_without_response_hint
-                    TestKind.NOTIFY -> R.string.kind_notify_hint
+                    TestKind.WRITE_WITH_RESPONSE -> R.string.throughput_kind_write_with_response_hint
+                    TestKind.WRITE_WITHOUT_RESPONSE -> R.string.throughput_kind_write_without_response_hint
+                    TestKind.NOTIFY -> R.string.throughput_kind_notify_hint
                 },
             ),
         )
         results.forEach { result ->
-            Text(stringResource(R.string.result_speed, result.mtu, result.kilobytesPerSecond))
-            Mono(stringResource(R.string.result_details, ThroughputProtocol.payloadSize(result.mtu), result.packets, result.millis.toInt()))
+            Text(stringResource(R.string.throughput_result_speed, result.mtu, result.kilobytesPerSecond))
+            Mono(stringResource(R.string.throughput_result_details, ThroughputProtocol.payloadSize(result.mtu), result.packets, result.millis.toInt()))
             if (kind != TestKind.WRITE_WITH_RESPONSE || !result.isComplete) {
-                Mono(stringResource(R.string.result_delivered, result.deliveredBytes.toInt(), result.bytes))
+                Mono(stringResource(R.string.throughput_result_delivered, result.deliveredBytes.toInt(), result.bytes))
             }
-            if (kind == TestKind.NOTIFY) Mono(stringResource(R.string.result_out_of_order, result.outOfOrder))
-            if (!result.isComplete) Warning(stringResource(R.string.result_lost, (result.bytes - result.deliveredBytes).toInt()))
+            if (kind == TestKind.NOTIFY) Mono(stringResource(R.string.throughput_result_out_of_order, result.outOfOrder))
+            if (!result.isComplete) Warning(stringResource(R.string.throughput_result_lost, (result.bytes - result.deliveredBytes).toInt()))
         }
     }
 }
@@ -191,9 +191,9 @@ private fun ResultCard(kind: TestKind, results: List<Measurement>) {
 @Composable
 private fun kindTitle(kind: TestKind): String = stringResource(
     when (kind) {
-        TestKind.WRITE_WITH_RESPONSE -> R.string.kind_write_with_response
-        TestKind.WRITE_WITHOUT_RESPONSE -> R.string.kind_write_without_response
-        TestKind.NOTIFY -> R.string.kind_notify
+        TestKind.WRITE_WITH_RESPONSE -> R.string.throughput_kind_write_with_response
+        TestKind.WRITE_WITHOUT_RESPONSE -> R.string.throughput_kind_write_without_response
+        TestKind.NOTIFY -> R.string.throughput_kind_notify
     },
 )
 
