@@ -14,6 +14,7 @@ import com.danyastry.ble.core.ble.gatt.queue.GattOperations
 import com.danyastry.ble.core.ble.gatt.queue.OperationRecord
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.emptyFlow
 
 interface GattConnection {
     val address: String
@@ -23,6 +24,8 @@ interface GattConnection {
     val connectionParameters: StateFlow<ConnectionParameters?>
     val notifications: Flow<Notification>
     val records: Flow<OperationRecord>
+    val servicesChanged: Flow<Unit>
+        get() = emptyFlow()
 
     suspend fun discoverServices(): List<GattServiceInfo>
     suspend fun requestMtu(mtu: Int): Int
@@ -34,5 +37,6 @@ interface GattConnection {
     suspend fun readPhy(): PhyPair
     suspend fun setPreferredPhy(phy: Phy): PhyPair
     suspend fun requestPriority(priority: ConnectionPriority)
+    fun refreshServiceCache(): Boolean = false
     fun close()
 }

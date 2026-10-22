@@ -6,4 +6,6 @@ import com.danyastry.ble.core.ble.gatt.connection.GattConnector
 
 class AndroidGattConnector(private val context: Context) : GattConnector {
     override fun connect(address: String): GattConnection = AndroidGattConnection(context.applicationContext, address)
+
+    override fun connectInBackground(address: String): GattConnection = AndroidGattConnection(context.applicationContext, address, autoConnect = true)
 }

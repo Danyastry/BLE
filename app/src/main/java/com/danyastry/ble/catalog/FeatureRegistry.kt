@@ -1,6 +1,7 @@
 package com.danyastry.ble.catalog
 
 import com.danyastry.ble.core.ui.FeatureEntry
+import com.danyastry.ble.feature.reconnect.ReconnectFeature
 import com.danyastry.ble.feature.bonding.BondingFeature
 import com.danyastry.ble.feature.connection.ConnectionFeature
 import com.danyastry.ble.feature.explorer.ExplorerFeature
@@ -16,5 +17,6 @@ object FeatureRegistry {
         ThroughputFeature,
         ConnectionFeature,
         BondingFeature,
+        ReconnectFeature,
     )
 }
